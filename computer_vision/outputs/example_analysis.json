@@ -1,0 +1,136 @@
+{
+  "video_id": "sample_accident_clip",
+  "video_metadata": {
+    "fps": 30.0,
+    "total_frames": 180,
+    "duration_seconds": 6.0,
+    "resolution": {
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "vehicles": [
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "frame_number": 0,
+          "timestamp_seconds": 0.0,
+          "bbox": [200.0, 450.0, 350.0, 560.0],
+          "center_x": 275.0,
+          "center_y": 505.0,
+          "confidence": 0.92
+        },
+        {
+          "frame_number": 30,
+          "timestamp_seconds": 1.0,
+          "bbox": [320.0, 452.0, 470.0, 562.0],
+          "center_x": 395.0,
+          "center_y": 507.0,
+          "confidence": 0.94
+        },
+        {
+          "frame_number": 60,
+          "timestamp_seconds": 2.0,
+          "bbox": [430.0, 455.0, 580.0, 565.0],
+          "center_x": 505.0,
+          "center_y": 510.0,
+          "confidence": 0.93
+        },
+        {
+          "frame_number": 90,
+          "timestamp_seconds": 3.0,
+          "bbox": [510.0, 456.0, 660.0, 566.0],
+          "center_x": 585.0,
+          "center_y": 511.0,
+          "confidence": 0.89
+        }
+      ],
+      "motion_analysis": {
+        "direction": "East (Right)",
+        "velocity_trend": "decreasing",
+        "acceleration_trend": "negative",
+        "sudden_motion_change": true,
+        "max_velocity_px_per_sec": 120.0,
+        "max_acceleration_px_per_sec2": -285.4
+      },
+      "trajectory": [
+        {"timestamp_seconds": 0.0, "x": 275.0, "y": 505.0},
+        {"timestamp_seconds": 1.0, "x": 395.0, "y": 507.0},
+        {"timestamp_seconds": 2.0, "x": 505.0, "y": 510.0},
+        {"timestamp_seconds": 3.0, "x": 585.0, "y": 511.0}
+      ]
+    },
+    {
+      "vehicle_id": 2,
+      "vehicle_class": "truck",
+      "detections": [
+        {
+          "frame_number": 0,
+          "timestamp_seconds": 0.0,
+          "bbox": [750.0, 420.0, 960.0, 600.0],
+          "center_x": 855.0,
+          "center_y": 510.0,
+          "confidence": 0.91
+        },
+        {
+          "frame_number": 30,
+          "timestamp_seconds": 1.0,
+          "bbox": [670.0, 422.0, 880.0, 602.0],
+          "center_x": 775.0,
+          "center_y": 512.0,
+          "confidence": 0.93
+        },
+        {
+          "frame_number": 60,
+          "timestamp_seconds": 2.0,
+          "bbox": [610.0, 425.0, 820.0, 605.0],
+          "center_x": 715.0,
+          "center_y": 515.0,
+          "confidence": 0.90
+        },
+        {
+          "frame_number": 90,
+          "timestamp_seconds": 3.0,
+          "bbox": [570.0, 426.0, 780.0, 606.0],
+          "center_x": 675.0,
+          "center_y": 516.0,
+          "confidence": 0.88
+        }
+      ],
+      "motion_analysis": {
+        "direction": "West (Left)",
+        "velocity_trend": "decreasing",
+        "acceleration_trend": "negative",
+        "sudden_motion_change": false,
+        "max_velocity_px_per_sec": 80.0,
+        "max_acceleration_px_per_sec2": -140.2
+      },
+      "trajectory": [
+        {"timestamp_seconds": 0.0, "x": 855.0, "y": 510.0},
+        {"timestamp_seconds": 1.0, "x": 775.0, "y": 512.0},
+        {"timestamp_seconds": 2.0, "x": 715.0, "y": 515.0},
+        {"timestamp_seconds": 3.0, "x": 675.0, "y": 516.0}
+      ]
+    }
+  ],
+  "possible_interactions": [
+    {
+      "vehicle_id_a": 1,
+      "vehicle_id_b": 2,
+      "timestamp_seconds": 3.0,
+      "frame_number": 90,
+      "distance_pixels": 90.0,
+      "interaction_type": "path_convergence",
+      "description": "Vehicle 1 and Vehicle 2 trajectories converge to minimum distance of 90.0 px at 3.0s."
+    }
+  ],
+  "limitations": [
+    "All velocities and accelerations are measured strictly in 2D image-plane pixels per second (px/s) and px/s^2.",
+    "Image-plane pixel measurements CANNOT be directly converted to real-world metric speed (km/h or mph) without camera calibration, intrinsic/extrinsic parameters, and physical ground distance references.",
+    "Camera perspective distortion, tilt angle, lens distortion, and distance from camera significantly affect pixel displacement rates.",
+    "Trajectory convergence and sudden motion changes represent possible interactions in the 2D video plane, NOT confirmed physical collisions or liability determinations.",
+    "Occlusions, lighting changes, camera motion, and tracking ID switches may cause temporary tracking gaps or ID reassignment."
+  ]
+}
