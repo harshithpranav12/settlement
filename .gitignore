@@ -1,4 +1,4 @@
-﻿# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
@@ -229,3 +229,8 @@ frontend/node_modules/
 dist/
 .env
 
+
+# Computer Vision & SQLite runtime outputs
+cv_outputs*/
+trace_ai.db
+data/uploads/
