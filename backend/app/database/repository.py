@@ -940,3 +940,119 @@ def update_analysis_run(run_id: str, data: AnalysisRunUpdate) -> Optional[Analys
             )
 
     return get_analysis_run(run_id)
+
+
+# ============================================================================
+# 8. REPORT REPOSITORY
+# ============================================================================
+
+def save_report(
+    incident_id: str,
+    title: str,
+    report_data: Dict[str, Any],
+    report_id: Optional[str] = None,
+    analysis_run_id: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Persist an investigation report to the database."""
+    rep_id = report_id or str(uuid4())
+    generated_at = _utc_now_iso()
+
+    with get_db_connection() as conn:
+        conn.execute(
+            """
+            INSERT INTO reports (id, incident_id, analysis_run_id, title, report_data, generated_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                rep_id,
+                incident_id,
+                analysis_run_id,
+                title,
+                json.dumps(report_data, default=str),
+                generated_at,
+            ),
+        )
+
+    return {
+        "id": rep_id,
+        "incident_id": incident_id,
+        "analysis_run_id": analysis_run_id,
+        "title": title,
+        "report_data": report_data,
+        "generated_at": generated_at,
+    }
+
+
+def get_report(report_id: str) -> Optional[Dict[str, Any]]:
+    """Retrieve an investigation report by ID."""
+    with get_db_connection() as conn:
+        row = conn.execute(
+            "SELECT id, incident_id, analysis_run_id, title, report_data, generated_at FROM reports WHERE id = ?",
+            (report_id,),
+        ).fetchone()
+
+    if not row:
+        return None
+
+    return {
+        "id": row["id"],
+        "incident_id": row["incident_id"],
+        "analysis_run_id": row["analysis_run_id"],
+        "title": row["title"],
+        "report_data": json.loads(row["report_data"]),
+        "generated_at": row["generated_at"],
+    }
+
+
+def get_latest_report_for_incident(incident_id: str) -> Optional[Dict[str, Any]]:
+    """Retrieve the most recent investigation report for an incident."""
+    with get_db_connection() as conn:
+        row = conn.execute(
+            """
+            SELECT id, incident_id, analysis_run_id, title, report_data, generated_at
+            FROM reports
+            WHERE incident_id = ?
+            ORDER BY generated_at DESC
+            LIMIT 1
+            """,
+            (incident_id,),
+        ).fetchone()
+
+    if not row:
+        return None
+
+    return {
+        "id": row["id"],
+        "incident_id": row["incident_id"],
+        "analysis_run_id": row["analysis_run_id"],
+        "title": row["title"],
+        "report_data": json.loads(row["report_data"]),
+        "generated_at": row["generated_at"],
+    }
+
+
+def list_reports_for_incident(incident_id: str) -> List[Dict[str, Any]]:
+    """Retrieve all investigation reports for an incident ordered chronologically."""
+    with get_db_connection() as conn:
+        rows = conn.execute(
+            """
+            SELECT id, incident_id, analysis_run_id, title, report_data, generated_at
+            FROM reports
+            WHERE incident_id = ?
+            ORDER BY generated_at DESC
+            """,
+            (incident_id,),
+        ).fetchall()
+
+    return [
+        {
+            "id": r["id"],
+            "incident_id": r["incident_id"],
+            "analysis_run_id": r["analysis_run_id"],
+            "title": r["title"],
+            "report_data": json.loads(r["report_data"]),
+            "generated_at": r["generated_at"],
+        }
+        for r in rows
+    ]
+

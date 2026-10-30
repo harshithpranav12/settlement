@@ -16,6 +16,22 @@ class IncidentStatus(str, Enum):
     ANALYZING = "analyzing"
     COMPLETED = "completed"
     ARCHIVED = "archived"
+    # Investigation workflow states
+    AWAITING_INITIAL_STATEMENTS = "awaiting_initial_statements"
+    AWAITING_EVIDENCE = "awaiting_evidence"
+    PROCESSING = "processing"
+    READY_FOR_REVIEW = "ready_for_review"
+    FAILED = "failed"
+
+
+class InvestigationStatus(str, Enum):
+    """Status of an automated investigation workflow run."""
+
+    AWAITING_INITIAL_STATEMENTS = "awaiting_initial_statements"
+    AWAITING_EVIDENCE = "awaiting_evidence"
+    PROCESSING = "processing"
+    READY_FOR_REVIEW = "ready_for_review"
+    FAILED = "failed"
 
 
 class EvidenceType(str, Enum):
@@ -65,6 +81,7 @@ class ContradictionStatus(str, Enum):
 
     DETECTED = "detected"
     UNDER_REVIEW = "under_review"
+    UNRESOLVED = "unresolved"
     RESOLVED = "resolved"
     DISMISSED = "dismissed"
 

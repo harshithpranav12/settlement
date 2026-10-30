@@ -1,6 +1,7 @@
 import logging
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import FastAPI, Request, status
+from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -10,6 +11,7 @@ from app.database import init_db
 from app.routes.analysis import router as analysis_router
 from app.routes.evidence import router as evidence_router
 from app.routes.health import router as health_router
+from app.routes.incident import router as incident_router
 
 logging.basicConfig(
     level=logging.INFO if not settings.DEBUG else logging.DEBUG,
@@ -63,11 +65,11 @@ def create_application() -> FastAPI:
     ) -> JSONResponse:
         logger.warning("Validation error on %s: %s", request.url.path, exc.errors())
         return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=422,
             content={
                 "error": "Validation Error",
-                "detail": exc.errors(),
-                "status_code": status.HTTP_422_UNPROCESSABLE_ENTITY,
+                "detail": jsonable_encoder(exc.errors()),
+                "status_code": 422,
             },
         )
 
@@ -85,10 +87,11 @@ def create_application() -> FastAPI:
             },
         )
 
-    # 2. Register Routes (Health, Evidence, Statement Analysis under /api)
+    # 2. Register Routes (Health, Incident, Evidence, Analysis under /api)
     application.include_router(health_router, prefix=settings.API_PREFIX, tags=["Health"])
+    application.include_router(incident_router, prefix=settings.API_PREFIX, tags=["Incidents & Parties"])
     application.include_router(evidence_router, prefix=settings.API_PREFIX, tags=["Evidence Management"])
-    application.include_router(analysis_router, prefix=settings.API_PREFIX, tags=["Statement Analysis"])
+    application.include_router(analysis_router, prefix=settings.API_PREFIX, tags=["Analysis & Investigation"])
 
     @application.get("/", tags=["Root"])
     async def root():

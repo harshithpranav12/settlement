@@ -106,6 +106,18 @@ CREATE TABLE IF NOT EXISTS analysis_runs (
     FOREIGN KEY (incident_id) REFERENCES incidents (id) ON DELETE CASCADE
 );
 
+-- 8. Investigation Reports Table
+CREATE TABLE IF NOT EXISTS reports (
+    id TEXT PRIMARY KEY,
+    incident_id TEXT NOT NULL,
+    analysis_run_id TEXT,
+    title TEXT NOT NULL,
+    report_data TEXT NOT NULL,
+    generated_at TEXT NOT NULL,
+    FOREIGN KEY (incident_id) REFERENCES incidents (id) ON DELETE CASCADE,
+    FOREIGN KEY (analysis_run_id) REFERENCES analysis_runs (id) ON DELETE SET NULL
+);
+
 -- Performance indices for incident foreign keys
 CREATE INDEX IF NOT EXISTS idx_parties_incident ON parties(incident_id);
 CREATE INDEX IF NOT EXISTS idx_evidence_incident ON evidence(incident_id);
@@ -113,4 +125,5 @@ CREATE INDEX IF NOT EXISTS idx_events_incident ON extracted_events(incident_id);
 CREATE INDEX IF NOT EXISTS idx_contradictions_incident ON contradictions(incident_id);
 CREATE INDEX IF NOT EXISTS idx_evidence_requests_incident ON evidence_requests(incident_id);
 CREATE INDEX IF NOT EXISTS idx_analysis_runs_incident ON analysis_runs(incident_id);
+CREATE INDEX IF NOT EXISTS idx_reports_incident ON reports(incident_id);
 """
