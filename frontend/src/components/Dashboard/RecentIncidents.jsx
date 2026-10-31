@@ -5,6 +5,7 @@ export default function RecentIncidents({
   incidents = [],
   selectedIncident,
   onSelectIncident,
+  onCreateIncidentClick
 }) {
   const safeIncidents = Array.isArray(incidents) ? incidents : [];
 
@@ -17,9 +18,20 @@ export default function RecentIncidents({
             Recent incident dossiers
           </h3>
         </div>
-        <span className="text-xs font-sans font-medium text-[#697586]">
-          {safeIncidents.length} simulated cases
-        </span>
+        <div className="flex items-center space-x-2">
+          <span className="text-xs font-sans font-medium text-[#697586]">
+            {safeIncidents.length} cases
+          </span>
+          {typeof onCreateIncidentClick === 'function' && (
+            <button
+              onClick={onCreateIncidentClick}
+              className="text-[11px] text-[#527D70] hover:text-[#43675C] font-semibold flex items-center gap-1 px-2 py-0.5 rounded border border-[#D0E0D6] bg-[#EBF2EE] hover:bg-[#DEEBE3] transition cursor-pointer"
+              title="Create new incident case"
+            >
+              <span>+ New</span>
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="mt-4 space-y-3">

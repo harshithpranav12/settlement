@@ -60,7 +60,8 @@ export default function EvidenceUpload({
   incident,
   evidenceSources = [],
   setEvidenceSources,
-  onUploadEvidence
+  onUploadEvidence,
+  onNavigateTab
 }) {
   const [activeSubTab, setActiveSubTab] = useState('video'); // 'video' | 'witness' | 'sensor'
 
@@ -252,6 +253,7 @@ export default function EvidenceUpload({
               onAddStatement={handleAddStatement}
               onUpdateStatement={handleUpdateStatement}
               onDeleteStatement={handleDeleteStatement}
+              onNavigateTab={onNavigateTab}
             />
           )}
 

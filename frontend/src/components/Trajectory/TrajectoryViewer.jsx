@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
   Activity,
-  Compass
+  Compass,
+  Box
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -15,7 +16,7 @@ import {
   ReferenceLine
 } from 'recharts';
 
-export default function TrajectoryViewer({ trajectoryData = [], vehicles = [], incident }) {
+export default function TrajectoryViewer({ trajectoryData = [], vehicles = [], incident, onNavigateTab }) {
   const [activeMetric, setActiveMetric] = useState('speed'); // 'speed' | 'accel'
 
   const safeTrajectoryData = Array.isArray(trajectoryData) ? trajectoryData : [];
@@ -39,11 +40,11 @@ export default function TrajectoryViewer({ trajectoryData = [], vehicles = [], i
           </p>
         </div>
 
-        {/* Metric Selector Buttons */}
+        {/* Metric Selector Buttons & 3D Spatial Scene Button */}
         <div className="flex items-center space-x-2 text-xs font-sans">
           <button
             onClick={() => setActiveMetric('speed')}
-            className={`px-3.5 py-2 rounded-md border transition ${
+            className={`px-3.5 py-2 rounded-md border transition cursor-pointer ${
               activeMetric === 'speed'
                 ? 'bg-[#EBF2EE] text-[#527D70] font-semibold border-[#D0E0D6]'
                 : 'bg-white text-[#697586] border-[#D9DEE3] hover:text-[#25364A] hover:bg-[#F5F4EF]'
@@ -53,7 +54,7 @@ export default function TrajectoryViewer({ trajectoryData = [], vehicles = [], i
           </button>
           <button
             onClick={() => setActiveMetric('accel')}
-            className={`px-3.5 py-2 rounded-md border transition ${
+            className={`px-3.5 py-2 rounded-md border transition cursor-pointer ${
               activeMetric === 'accel'
                 ? 'bg-[#EBF2EE] text-[#527D70] font-semibold border-[#D0E0D6]'
                 : 'bg-white text-[#697586] border-[#D9DEE3] hover:text-[#25364A] hover:bg-[#F5F4EF]'
@@ -61,6 +62,16 @@ export default function TrajectoryViewer({ trajectoryData = [], vehicles = [], i
           >
             Deceleration profiles (g)
           </button>
+          {typeof onNavigateTab === 'function' && (
+            <button
+              onClick={() => onNavigateTab('reconstruction3d')}
+              className="px-3.5 py-2 rounded-md bg-[#527D70] hover:bg-[#43675C] text-white font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-xs ml-2"
+              title="Launch interactive 3D accident reconstruction"
+            >
+              <Box className="w-3.5 h-3.5" />
+              <span>3D Spatial Scene</span>
+            </button>
+          )}
         </div>
       </div>
 

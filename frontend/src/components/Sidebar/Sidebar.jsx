@@ -9,14 +9,18 @@ import {
   ShieldCheck,
   Cpu,
   Crosshair,
-  Lock
+  Lock,
+  Box,
+  Sparkles
 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard, badge: null },
   { id: 'evidence', label: 'Evidence Upload', icon: UploadCloud, badge: '7 sources' },
+  { id: 'ai-intelligence', label: 'AI Intelligence', icon: Sparkles, badge: 'Featherless', badgeColor: 'text-[#C18A45] bg-[#FAF4EB] border-[#F0DFCA]' },
   { id: 'timeline', label: 'Timeline Reconstruction', icon: GitCommit, badge: '10 events' },
   { id: 'contradictions', label: 'Contradiction Analysis', icon: AlertTriangle, badge: '3 flags', badgeColor: 'text-[#B85C5C] bg-[#FBF2F2] border-[#F1D7D7]' },
+  { id: 'reconstruction3d', label: '3D Reconstruction', icon: Box, badge: 'Spatial 3D', badgeColor: 'text-[#527D70] bg-[#EBF2EE] border-[#D0E0D6]' },
   { id: 'trajectory', label: 'Vehicle Trajectory', icon: Activity, badge: '3 tracks' },
   { id: 'reports', label: 'Investigation Reports', icon: FileText, badge: 'Export' },
 ];
@@ -73,9 +77,9 @@ export default function Sidebar({
             {currentIncident?.title || 'I-95 Multi-Vehicle Crash'}
           </div>
           <div className="mt-2.5 pt-2 border-t border-[#EDF0F3] flex items-center justify-between text-xs">
-            <span className="text-[#697586]">Model consistency</span>
-            <span className="text-[#527D70] font-bold font-mono">
-              {currentIncident?.reconstructionConfidence || 94.2}%
+            <span className="text-[#697586]" title="Illustrative benchmark score from synthetic demo data; not a verified forensic probability">Simulated consistency</span>
+            <span className="text-[#527D70] font-bold font-mono" title="Illustrative benchmark score: 94.2%">
+              {currentIncident?.reconstructionConfidence || 94.2}% (Demo)
             </span>
           </div>
         </div>
@@ -132,12 +136,12 @@ export default function Sidebar({
         <div className="flex items-center justify-between text-[#697586] mb-1.5">
           <span className="flex items-center gap-1.5 font-medium">
             <Cpu className="w-3.5 h-3.5 text-[#7189A6]" />
-            <span>Processing pipeline</span>
+            <span>Telemetry pipeline</span>
           </span>
-          <span className="text-[#527D70] font-mono font-medium">94% simulated</span>
+          <span className="text-[#527D70] font-mono font-medium">Synthetic active</span>
         </div>
         <div className="w-full bg-[#E8EAE6] h-1.5 rounded-full overflow-hidden">
-          <div className="bg-[#527D70] h-full rounded-full transition-all duration-300" style={{ width: '94%' }}></div>
+          <div className="bg-[#527D70] h-full rounded-full transition-all duration-300" style={{ width: '100%' }}></div>
         </div>
         <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-[#EDF0F3] text-xs text-[#8A96A6]">
           <span>Synthetic demo data</span>

@@ -9,10 +9,11 @@ import {
   User,
   MapPin,
   Clock,
-  AlertCircle
+  AlertCircle,
+  Sparkles
 } from 'lucide-react';
 
-export default function WitnessStatements({ statements = [], onAddStatement, onUpdateStatement, onDeleteStatement }) {
+export default function WitnessStatements({ statements = [], onAddStatement, onUpdateStatement, onDeleteStatement, onNavigateTab }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -380,14 +381,26 @@ export default function WitnessStatements({ statements = [], onAddStatement, onU
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-[#EDF0F3] flex items-center justify-between text-xs text-[#8A96A6]">
+                  <div className="pt-3 border-t border-[#EDF0F3] flex flex-wrap items-center justify-between text-xs text-[#8A96A6] gap-2">
                     <span className="flex items-center gap-1 text-[11px] font-mono">
                       <Clock className="w-3.5 h-3.5" />
                       Recorded: {stmt.recordedAt || stmt.dateAdded || 'On-scene interview'}
                     </span>
-                    <span className="text-[11px] font-sans px-2 py-0.5 rounded border text-[#C18A45] bg-[#FAF4EB] border-[#F0DFCA] font-medium">
-                      {stmt.status || 'Awaiting Analysis'}
-                    </span>
+                    <div className="flex items-center space-x-2">
+                      {typeof onNavigateTab === 'function' && (
+                        <button
+                          type="button"
+                          onClick={() => onNavigateTab('ai-intelligence')}
+                          className="inline-flex items-center space-x-1 px-2.5 py-1 rounded bg-[#FAF4EB] hover:bg-[#F3E7D5] text-[11px] text-[#C18A45] font-semibold border border-[#F0DFCA] transition cursor-pointer shadow-2xs"
+                        >
+                          <Sparkles className="w-3 h-3 text-[#C18A45]" />
+                          <span>Analyze with Featherless AI</span>
+                        </button>
+                      )}
+                      <span className="text-[11px] font-sans px-2 py-0.5 rounded border text-[#C18A45] bg-[#FAF4EB] border-[#F0DFCA] font-medium">
+                        {stmt.status || 'Awaiting Analysis'}
+                      </span>
+                    </div>
                   </div>
                 </>
               )}
