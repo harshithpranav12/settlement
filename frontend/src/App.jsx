@@ -37,6 +37,7 @@ export default function App() {
   const [timelineEvents, setTimelineEvents] = useState([]);
   const [contradictions, setContradictions] = useState([]);
   const [report, setReport] = useState(null);
+  const [videoAnalysisResult, setVideoAnalysisResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStatus, setProcessingStatus] = useState('');
@@ -237,9 +238,9 @@ export default function App() {
     if (!selectedIncident || !evidenceId) return;
     try {
       setIsProcessing(true);
-      setProcessingStatus('Executing YOLOv8 vehicle detection & ByteTrack kinematics...');
+      setProcessingStatus('Executing YOLOv8 vehicle detection, ByteTrack kinematics & LLM forensic synthesis...');
       const cvResult = await apiService.analyzeVideo(selectedIncident.id, evidenceId);
-      alert(`Vision Analysis Complete! Tracked ${cvResult.tracked_vehicles_count} vehicles, ${cvResult.total_detections} detections across video frames.`);
+      setVideoAnalysisResult(cvResult);
       await loadCaseDetails(selectedIncident.id);
     } catch (err) {
       alert(`Computer vision analysis failed: ${err.message}`);
@@ -796,6 +797,89 @@ export default function App() {
                     </div>
                   )}
                 </div>
+
+                {/* LLM Video Forensic Assessment Card */}
+                {videoAnalysisResult && (
+                  <div className="bg-[#111827] border border-amber-500/30 rounded-xl p-5 shadow-xl gold-glow animate-in fade-in duration-300">
+                    <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+                          <Sparkles className="w-4 h-4 text-amber-400" />
+                        </div>
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+                            LLM Video Forensic Assessment & Kinematics
+                          </h3>
+                          <span className="text-[10px] text-amber-400/90 font-mono">
+                            Model: {videoAnalysisResult.llm_analysis?.model_used || 'Featherless AI / Grounded Synthesis'}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-3 text-xs">
+                        <span className="bg-slate-900 border border-slate-700/80 px-2 py-0.5 rounded text-slate-300">
+                          Tracks: <strong className="text-white">{videoAnalysisResult.tracked_vehicles_count}</strong>
+                        </span>
+                        <span className="bg-slate-900 border border-slate-700/80 px-2 py-0.5 rounded text-slate-300">
+                          Detections: <strong className="text-white">{videoAnalysisResult.total_detections}</strong>
+                        </span>
+                        <span className="bg-slate-900 border border-slate-700/80 px-2 py-0.5 rounded text-slate-300">
+                          FPS: <strong className="text-white">{videoAnalysisResult.video_fps}</strong>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* LLM Narrative Synthesis */}
+                    {videoAnalysisResult.llm_analysis?.narrative_synthesis && (
+                      <div className="mt-4 bg-slate-900/90 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 leading-relaxed">
+                        <span className="text-[10px] text-amber-400 font-bold uppercase block mb-1">
+                          Objective Visual Narrative
+                        </span>
+                        {videoAnalysisResult.llm_analysis.narrative_synthesis}
+                      </div>
+                    )}
+
+                    {/* Path Convergence & Interaction Assessment */}
+                    {videoAnalysisResult.llm_analysis?.interaction_assessment && (
+                      <div className="mt-3 bg-amber-950/20 border border-amber-500/20 rounded-lg p-3 text-xs text-amber-200">
+                        <span className="text-[10px] text-amber-400 font-bold uppercase block mb-1">
+                          Interaction & Proximity Assessment
+                        </span>
+                        {videoAnalysisResult.llm_analysis.interaction_assessment}
+                      </div>
+                    )}
+
+                    {/* Observable Visual Timeline Milestones */}
+                    {videoAnalysisResult.llm_analysis?.observable_timeline?.length > 0 && (
+                      <div className="mt-4">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase block mb-2">
+                          Extracted Visual Milestones ({videoAnalysisResult.llm_analysis.observable_timeline.length})
+                        </span>
+                        <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1 text-xs">
+                          {videoAnalysisResult.llm_analysis.observable_timeline.map((item, idx) => (
+                            <div key={idx} className="bg-slate-900/70 border border-slate-800/80 rounded px-2.5 py-1.5 flex items-start justify-between">
+                              <div>
+                                <span className="font-mono text-amber-400 text-[11px] mr-2 font-bold">{item.time_offset}</span>
+                                <span className="text-slate-200">{item.event}</span>
+                              </div>
+                              <span className="text-[10px] text-slate-500 shrink-0 ml-2">Frame {item.frame}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Forensic Boundary Limitations */}
+                    {videoAnalysisResult.llm_analysis?.forensic_unknowns?.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
+                        <span className="font-bold text-slate-300 block">Forensic Boundaries & Unknowns:</span>
+                        {videoAnalysisResult.llm_analysis.forensic_unknowns.map((u, idx) => (
+                          <p key={idx}>• {u}</p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 

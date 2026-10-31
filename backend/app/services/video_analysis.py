@@ -36,6 +36,7 @@ from app.models.video_analysis import (
     VehicleTrack,
     VideoAnalysisPayload,
     VideoAnalysisResponse,
+    VideoLLMAnalysis,
 )
 
 logger = logging.getLogger("trace_ai.video_analysis")
@@ -422,6 +423,57 @@ class VideoAnalysisService:
             len(payload.detections),
         )
 
+        # 8. LLM Video Observation Assessment & Synthesis
+        llm_analysis_obj: Optional[VideoLLMAnalysis] = None
+        try:
+            from featherless_client import featherless_client
+            from app.database import list_parties_for_incident
+            parties_records = list_parties_for_incident(incident_id)
+            parties_context = [
+                {"party_label": p.party_label.value if hasattr(p.party_label, "value") else str(p.party_label), "name": p.name, "statement": p.statement}
+                for p in parties_records
+            ]
+            llm_context = {
+                "source_id": payload.source_id,
+                "video_fps": payload.video_fps,
+                "frame_width": payload.frame_width,
+                "frame_height": payload.frame_height,
+                "total_detections": len(payload.detections),
+                "vehicle_tracks": [
+                    {
+                        "vehicle_id": t.vehicle_id,
+                        "detected_class": t.detected_class,
+                        "first_frame": t.first_frame,
+                        "last_frame": t.last_frame,
+                        "first_timestamp_seconds": t.first_timestamp_seconds,
+                        "last_timestamp_seconds": t.last_timestamp_seconds,
+                        "duration_seconds": t.duration_seconds,
+                        "detection_count": t.detection_count,
+                        "velocity_trend": t.motion_summary.velocity_trend if t.motion_summary else None,
+                        "acceleration_trend": t.motion_summary.acceleration_trend if t.motion_summary else None,
+                    }
+                    for t in vehicle_tracks
+                ],
+                "motion_analysis": [m.model_dump() for m in (payload.motion_analysis or [])],
+                "possible_interactions": [inter.model_dump() for inter in (payload.possible_interactions or [])],
+                "parties": parties_context,
+            }
+            raw_llm = featherless_client.analyze_video_observations(llm_context)
+            if raw_llm:
+                llm_analysis_obj = VideoLLMAnalysis(**raw_llm)
+                # Record LLM analysis run in database for persistence
+                create_analysis_run(
+                    AnalysisRunCreate(
+                        incident_id=incident_id,
+                        run_type="video_llm_analysis",
+                        status=AnalysisRunStatus.COMPLETED,
+                        summary=raw_llm.get("narrative_synthesis", "LLM video forensic observation assessment complete."),
+                        findings=raw_llm,
+                    )
+                )
+        except Exception as exc:
+            logger.warning("LLM video analysis synthesis notice: %s", exc)
+
         return VideoAnalysisResponse(
             analysis_id=analysis_id,
             incident_id=incident_id,
@@ -438,6 +490,7 @@ class VideoAnalysisService:
             artifacts=payload.artifacts,
             limitations=payload.limitations,
             summary=summary,
+            llm_analysis=llm_analysis_obj,
         )
 
 
@@ -454,10 +507,22 @@ class VideoAnalysisService:
         evidence = self._verify_video_evidence(incident_id, evidence_id)
         video_path = Path(evidence.storage_reference).resolve()
         if not video_path.exists():
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Video file for evidence '{evidence_id}' does not exist on disk at '{video_path}'.",
-            )
+            from app.config import settings
+            repo_root = Path(__file__).resolve().parent.parent.parent.parent
+            candidates = [
+                Path(settings.UPLOAD_DIR) / evidence.storage_reference,
+                repo_root / evidence.storage_reference,
+                Path(settings.UPLOAD_DIR) / "incidents" / incident_id / Path(evidence.storage_reference).name,
+            ]
+            for candidate in candidates:
+                if candidate.resolve().exists():
+                    video_path = candidate.resolve()
+                    break
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"Video file for evidence '{evidence_id}' does not exist on disk at '{video_path}'.",
+                )
 
         from computer_vision.main import process_video
 

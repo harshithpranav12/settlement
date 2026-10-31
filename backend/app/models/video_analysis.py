@@ -459,6 +459,42 @@ class VehicleTrack(BaseModel):
     motion_summary: Optional[MotionAnalysisItem] = None
 
 
+class VideoLLMAnalysis(BaseModel):
+    """LLM-synthesized objective narrative and forensic cross-examination for video evidence."""
+
+    narrative_synthesis: str = Field(
+        ...,
+        description="Forensic narrative summarizing observable video tracking, kinematic trends, and trajectory progression",
+    )
+    observable_timeline: List[Dict[str, Any]] = Field(
+        default_factory=list,
+        description="Structured chronological visual milestones with exact frame and second offsets",
+    )
+    claim_correlations: List[Dict[str, Any]] = Field(
+        default_factory=list,
+        description="Comparison between visual observations and driver statements without declaring legal fault",
+    )
+    interaction_assessment: str = Field(
+        ...,
+        description="Evaluation of path convergence or proximity moments with strict physical caveats",
+    )
+    forensic_unknowns: List[str] = Field(
+        default_factory=list,
+        description="Factors that cannot be determined from this video footage alone (blind spots, photogrammetric scale, signal visibility)",
+    )
+    model_used: str = Field(
+        default="Featherless AI / Grounded Synthesis",
+        description="LLM provider or deterministic engine used",
+    )
+    liability_disclaimer: str = Field(
+        default=(
+            "TRACE AI / SettlementAI video analysis is limited to observable image-plane kinematics. "
+            "It does not assign civil liability or criminal fault."
+        ),
+        description="Forensic boundary disclaimer",
+    )
+
+
 class VideoAnalysisResponse(BaseModel):
     """Structured response from video analysis ingestion."""
 
@@ -477,6 +513,10 @@ class VideoAnalysisResponse(BaseModel):
     artifacts: Optional[Dict[str, Any]] = None
     limitations: Optional[List[str]] = None
     summary: str
+    llm_analysis: Optional[VideoLLMAnalysis] = Field(
+        default=None,
+        description="LLM-synthesized forensic narrative and claim correlation",
+    )
     disclaimer: str = Field(
         default=(
             "Algorithm-generated visual tracking and 2D image-plane motion analysis represent machine-vision observations. "

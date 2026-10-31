@@ -45,7 +45,12 @@ class JSONExporter:
         for v in vehicles_data:
             for det in v.get("detections", []):
                 flat_detections.append(det)
-        flat_detections.sort(key=lambda d: (d.get("frame_number", 0), d.get("vehicle_id", 0)))
+        flat_detections.sort(
+            key=lambda d: (
+                int(d.get("frame_number", 0)),
+                str(d.get("vehicle_id", "")),
+            )
+        )
 
         resolution = video_metadata.get("resolution", {})
         fps = video_metadata.get("fps", 30.0)

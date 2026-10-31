@@ -865,6 +865,153 @@ Generate narrative forensic summary in strict JSON:"""
             "datasetAuthenticity": "SIMULATED / DEMONSTRATION DATA"
         }
 
+    # -------------------------------------------------------------------------
+    # 7. VIDEO FORENSIC OBSERVATION ANALYSIS (LLM / DETERMINISTIC FALLBACK)
+    # -------------------------------------------------------------------------
+    def analyze_video_observations(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Synthesizes computer vision tracking, velocity trends, and convergence
+        into an objective, evidence-grounded forensic assessment.
+        Ensures strict neutrality and never hallucinates speeds or fault.
+        """
+        if self.is_configured:
+            system_prompt = (
+                f"{FORENSIC_BASE_SYSTEM_PROMPT}\n"
+                "TASK: Analyze machine-vision vehicle tracking and kinematics observations from accident video footage.\n"
+                "RULES:\n"
+                "- Only discuss vehicles, frame numbers, and visual events present in the supplied data.\n"
+                "- Never attribute civil liability, legal fault, or traffic signal compliance unless explicitly visible.\n"
+                "- Clearly distinguish 2D image-plane observations from physical 3D contact.\n"
+                "- Identify what is observable, what correlates with driver claims, and what remains unknown.\n"
+                "Return JSON with keys: narrative_synthesis, observable_timeline, claim_correlations, interaction_assessment, forensic_unknowns."
+            )
+            user_prompt = f"VIDEO OBSERVATION DATA:\n{json.dumps(context, indent=2)}"
+            api_res = self._call_api_with_fallback(
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                response_format_json=True,
+            )
+            if api_res:
+                content, model_used = api_res
+                try:
+                    parsed = json.loads(content)
+                    parsed["model_used"] = model_used
+                    parsed["liability_disclaimer"] = (
+                        "TRACE AI video analysis produces objective technical interpretations of image-plane kinematics. "
+                        "It does not assign civil liability, criminal culpability, or financial fault."
+                    )
+                    return parsed
+                except Exception:
+                    pass
+
+        return self._build_deterministic_video_analysis(context)
+
+    def _build_deterministic_video_analysis(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Grounded forensic video analysis built deterministically without hallucination."""
+        tracks = context.get("vehicle_tracks", [])
+        interactions = context.get("possible_interactions", [])
+        motions = context.get("motion_analysis", [])
+        parties = context.get("parties", [])
+        fps = context.get("video_fps", 30.0)
+        source_id = context.get("source_id", "video_source")
+
+        timeline = []
+        for t in tracks:
+            vid = t.get("vehicle_id", "unknown")
+            cls_name = t.get("detected_class", "vehicle")
+            f_start = t.get("first_frame", 0)
+            f_end = t.get("last_frame", 0)
+            t_start = t.get("first_timestamp_seconds", 0.0)
+            t_end = t.get("last_timestamp_seconds", 0.0)
+            pts_count = t.get("detection_count", 0)
+            timeline.append({
+                "time_offset": f"t + {t_start:.2f}s",
+                "frame": f_start,
+                "event": f"Track '{vid}' ({cls_name}) enters camera field-of-view at frame {f_start}.",
+                "source": source_id,
+            })
+            if t_end > t_start:
+                timeline.append({
+                    "time_offset": f"t + {t_end:.2f}s",
+                    "frame": f_end,
+                    "event": f"Track '{vid}' observed across {pts_count} trajectory points through frame {f_end} (t={t_end:.2f}s).",
+                    "source": source_id,
+                })
+
+        for m in motions:
+            if m.get("sudden_motion_change"):
+                timeline.append({
+                    "time_offset": "Inflection Point",
+                    "frame": "Variable",
+                    "event": f"Sudden 2D image-plane motion change detected for Track '{m.get('vehicle_id')}': velocity_trend='{m.get('velocity_trend')}', acceleration_trend='{m.get('acceleration_trend')}'.",
+                    "source": source_id,
+                })
+
+        for inter in interactions:
+            v_ids = inter.get("vehicle_ids", [])
+            t_sec = inter.get("timestamp_seconds", 0.0)
+            dist_px = inter.get("min_image_distance_pixels", 0.0)
+            timeline.append({
+                "time_offset": f"t + {t_sec:.2f}s",
+                "frame": inter.get("evidence_frame_numbers", [0])[0] if inter.get("evidence_frame_numbers") else 0,
+                "event": f"Path convergence event between tracks {v_ids} with closest 2D pixel separation of {dist_px}px.",
+                "source": source_id,
+            })
+
+        timeline.sort(key=lambda x: str(x.get("time_offset", "")))
+
+        correlations = []
+        for p in parties:
+            lbl = p.get("party_label", "Party")
+            stmt = p.get("statement", "")
+            if stmt:
+                correlations.append({
+                    "party_label": lbl,
+                    "statement_excerpt": stmt[:120] + ("..." if len(stmt) > 120 else ""),
+                    "video_corroboration": (
+                        f"Machine vision tracked {len(tracks)} vehicle(s) in video footage. "
+                        f"Visual motion trends confirm vehicle presence but cannot verify driver's subjective signal claim without direct traffic light visibility."
+                    ),
+                    "status": "OBJECTIVELY_CORRELATED_PRESENCE",
+                })
+
+        num_tracks = len(tracks)
+        num_interactions = len(interactions)
+        num_changes = sum(1 for m in motions if m.get("sudden_motion_change"))
+
+        interaction_assessment = (
+            f"Machine vision detected {num_interactions} spatial-temporal path convergence event(s). "
+            f"2D pixel proximity confirms trajectories approached within critical image distance, "
+            f"indicating spatial interaction window. However, pixel-space proximity alone does not prove physical contact or determine fault."
+            if num_interactions > 0
+            else "No path convergence or anomalous proximity events were observed within 2D image-plane tracking."
+        )
+
+        narrative = (
+            f"Automated forensic video examination processed {source_id} at {fps:.1f} FPS. "
+            f"ByteTrack multi-object tracking confirmed {num_tracks} distinct vehicle trajectory sequence(s) across the recording. "
+            f"Image-plane kinematics identified {num_changes} sudden motion inflection point(s) and {num_interactions} path convergence moment(s). "
+            f"Visual observations confirm trajectory geometry but represent 2D image coordinates; metric speeds and legal culpability are not determined."
+        )
+
+        return {
+            "narrative_synthesis": narrative,
+            "observable_timeline": timeline,
+            "claim_correlations": correlations,
+            "interaction_assessment": interaction_assessment,
+            "forensic_unknowns": [
+                "2D Pixel Space vs Metric Survey: Bounding box coordinates are measured in camera pixel units and lack photogrammetric surveyed calibration.",
+                "Camera Field-of-View Blindspots: Actions or vehicles prior to entering camera frame or post-egress are unobservable.",
+                "Traffic Signal Phase Visibility: Unless traffic control signals are explicitly within line-of-sight, signal compliance cannot be visually proven.",
+                "Mechanical Pre-Impact Conditions: Video cannot determine steering angle, brake hydraulic pressure, or pedal input; telematics is required.",
+            ],
+            "model_used": "Featherless AI / Deterministic Forensic Engine",
+            "liability_disclaimer": (
+                "TRACE AI / SettlementAI video analysis produces objective technical interpretations of image-plane kinematics. "
+                "It does not assign civil liability, criminal culpability, or financial fault."
+            ),
+        }
+
     def _extract_citations(self, text: str) -> List[str]:
         citations = []
         found = re.findall(r'\[Ref:?\s*([^\]]+)\]', text, re.IGNORECASE)

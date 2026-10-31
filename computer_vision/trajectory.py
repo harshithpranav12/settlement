@@ -28,9 +28,10 @@ class TrajectoryPoint:
         self.x = float(x)
         self.y = float(y)
 
-    def to_dict(self) -> Dict[str, float]:
+    def to_dict(self) -> Dict[str, Any]:
         """Converts point to the standard JSON schema format."""
         return {
+            "frame_number": self.frame_number,
             "timestamp_seconds": round(self.timestamp_seconds, 3),
             "x": round(self.x, 2),
             "y": round(self.y, 2),

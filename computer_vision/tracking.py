@@ -139,6 +139,12 @@ class VehicleTracker:
             vehicle_class = self.target_classes.get(cls_id, "unknown_vehicle")
             
             x1, y1, x2, y2 = box.xyxy[0].tolist()
+            # Clamp bounding boxes to valid frame boundaries to prevent model subpixel boundary drift
+            h, w = frame.shape[:2]
+            x1 = max(0.0, min(float(w - 1.0), float(x1)))
+            y1 = max(0.0, min(float(h - 1.0), float(y1)))
+            x2 = max(x1 + 1.0, min(float(w), float(x2)))
+            y2 = max(y1 + 1.0, min(float(h), float(y2)))
             conf = float(box.conf[0].item())
             center_x = (x1 + x2) / 2.0
             center_y = (y1 + y2) / 2.0

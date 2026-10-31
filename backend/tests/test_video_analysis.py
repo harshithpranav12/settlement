@@ -617,3 +617,60 @@ def test_source_id_matching_by_filename_or_stem():
     assert resp.status_code == 200
     assert resp.json()["source_id"] == "VID001"
 
+
+def test_video_llm_analysis_synthesis():
+    """Verify video analysis executes LLM forensic synthesis with grounded narrative."""
+    incident, evidence = _setup_video_evidence()
+
+    payload = {
+        "source_id": evidence.id,
+        "video_fps": 30.0,
+        "frame_width": 1280,
+        "frame_height": 720,
+        "detections": [
+            {
+                "vehicle_id": "V1",
+                "class": "car",
+                "timestamp_seconds": 1.0,
+                "frame_number": 30,
+                "bbox": [100.0, 100.0, 250.0, 220.0],
+                "confidence": 0.95,
+            },
+            {
+                "vehicle_id": "V2",
+                "class": "truck",
+                "timestamp_seconds": 1.0,
+                "frame_number": 30,
+                "bbox": [300.0, 100.0, 480.0, 250.0],
+                "confidence": 0.92,
+            },
+        ],
+        "possible_interactions": [
+            {
+                "vehicle_ids": ["V1", "V2"],
+                "timestamp_seconds": 1.2,
+                "finding": "path_convergence",
+                "min_image_distance_pixels": 45.0,
+                "evidence_frame_numbers": [36],
+                "confidence": 0.88,
+            }
+        ],
+    }
+
+    res = client.post(f"/api/incidents/{incident.id}/cv-detections", json=payload)
+    assert res.status_code == 200
+    data = res.json()
+    assert "llm_analysis" in data
+    assert data["llm_analysis"] is not None
+    llm = data["llm_analysis"]
+    assert "narrative_synthesis" in llm
+    assert len(llm["narrative_synthesis"]) > 20
+    assert "observable_timeline" in llm
+    assert len(llm["observable_timeline"]) >= 2
+    assert "interaction_assessment" in llm
+    assert "forensic_unknowns" in llm
+    assert len(llm["forensic_unknowns"]) >= 2
+    assert "liability_disclaimer" in llm
+    assert "liability" in llm["liability_disclaimer"].lower()
+
+

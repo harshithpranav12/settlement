@@ -124,6 +124,28 @@ async def analyze_video_evidence(
 
 
 @router.post(
+    "/incidents/{incident_id}/evidence/{evidence_id}/video-llm-analysis",
+    summary="Generate or re-synthesize LLM forensic interpretation for video evidence",
+    description="Invokes LLM synthesis on stored video tracks, kinematics, and driver claims without determining fault.",
+    tags=["Video & Computer Vision Analysis"],
+)
+async def generate_video_llm_analysis(
+    incident_id: str = Path(..., description="Unique ID of the incident"),
+    evidence_id: str = Path(..., description="Unique ID of the target video evidence"),
+):
+    """Generate or retrieve LLM forensic synthesis for video observations."""
+    from app.database import list_analysis_runs_for_incident
+    runs = list_analysis_runs_for_incident(incident_id)
+    for r in runs:
+        if r.run_type == "video_llm_analysis" and r.findings:
+            return r.findings
+
+    # If not yet generated, execute video analysis which generates LLM synthesis
+    res = await video_analysis_service.analyze_video_evidence(incident_id=incident_id, evidence_id=evidence_id)
+    return res.llm_analysis
+
+
+@router.post(
     "/incidents/{incident_id}/analyze-video",
     response_model=VideoAnalysisResponse,
     summary="Upload and analyze accident video through computer vision pipeline in one step",
