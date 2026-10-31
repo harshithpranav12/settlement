@@ -4,57 +4,87 @@
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: dark;
   }
   
   body {
-    background-color: #F5F4EF;
-    color: #25364A;
+    background-color: #090D14;
+    color: #F1F5F9;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 }
 
-/* Light architectural engineering grid for trajectory & photogrammetry canvas */
+/* Subtle architectural grid pattern for forensic inspection */
 @layer utilities {
-  .cad-grid {
-    background-size: 20px 20px;
+  .settlement-grid {
+    background-size: 32px 32px;
     background-image: 
-      linear-gradient(to right, rgba(113, 137, 166, 0.12) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(113, 137, 166, 0.12) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   }
 
-  .cad-grid-dense {
-    background-size: 10px 10px;
-    background-image: 
-      linear-gradient(to right, rgba(217, 222, 227, 0.6) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(217, 222, 227, 0.6) 1px, transparent 1px);
+  .gold-glow {
+    box-shadow: 0 0 20px -3px rgba(245, 158, 11, 0.25);
+  }
+  
+  .emerald-glow {
+    box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.25);
+  }
+
+  .rose-glow {
+    box-shadow: 0 0 20px -3px rgba(244, 63, 94, 0.25);
   }
 }
 
-/* Crisp light enterprise scrollbar */
+/* Modern Dark Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5F4EF;
+  background: #090D14;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D9DEE3;
-  border-radius: 3px;
+  background: #1E293B;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B5BDC6;
+  background: #334155;
 }
 
+/* Print Stylesheet for Settlement Dossier */
 @media print {
   body {
-    background: white !important;
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
   }
-  aside, header {
+
+  .print\\:hidden,
+  nav,
+  header,
+  aside,
+  button:not(.print-include) {
     display: none !important;
+  }
+
+  .settlement-report-print {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .settlement-report-print * {
+    color: #0F172A !important;
+    border-color: #CBD5E1 !important;
   }
 }
