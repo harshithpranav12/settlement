@@ -16,7 +16,8 @@ import {
   Cpu,
   ShieldCheck,
   RefreshCw,
-  ExternalLink
+  ExternalLink,
+  Box
 } from 'lucide-react';
 import { detectContradictions } from '../../utils/contradictionEngine';
 import featherlessService from '../../services/featherlessService';
@@ -117,7 +118,11 @@ export default function ContradictionMatrix({
       if (result && result.explanation) {
         setAiExplanations((prev) => ({
           ...prev,
-          [contradiction.id]: result.explanation,
+          [contradiction.id]: {
+            explanation: result.explanation,
+            source: result.source || 'FEATHERLESS_API',
+            model: result.model || 'Qwen/Qwen2.5-72B-Instruct',
+          },
         }));
       }
     } catch (err) {
@@ -127,7 +132,12 @@ export default function ContradictionMatrix({
     }
   };
 
-  const currentAiExplanation = aiExplanations[selected.id] || featherlessService.getDeterministicExplanation(selected).explanation;
+  const currentAiResult = aiExplanations[selected.id] || {
+    explanation: featherlessService.getDeterministicExplanation(selected).explanation,
+    source: 'DETERMINISTIC_EVIDENCE_ENGINE',
+    model: 'TRACE_DETERMINISTIC_V1'
+  };
+  const currentAiExplanation = currentAiResult.explanation;
 
   const getSeverityStyle = (sev) => {
     switch (sev) {
@@ -601,6 +611,15 @@ export default function ContradictionMatrix({
             <div className="text-xs text-[#25364A] leading-relaxed whitespace-pre-line bg-[#FAFAF8] p-4 rounded-md border border-[#EDF0F3] font-sans">
               {currentAiExplanation}
             </div>
+
+            <div className="flex items-center justify-between pt-1 text-[10px] text-[#8A96A6]">
+              <span>
+                Inference Source: <strong className="text-[#25364A]">{currentAiResult.source === 'FEATHERLESS_API' ? `Live AI (${currentAiResult.model})` : 'Deterministic Fallback (TRACE Engine)'}</strong>
+              </span>
+              <span className="font-mono text-[#C18A45] bg-[#FAF4EB] px-1.5 py-0.5 rounded border border-[#F0DFCA]">
+                SIMULATED / DEMONSTRATION DATA
+              </span>
+            </div>
           </div>
 
           {/* Impact on Causation & Liability */}
@@ -636,16 +655,26 @@ export default function ContradictionMatrix({
               ))}
             </div>
 
-            {/* Quick Evidence / Timeline Navigation */}
+            {/* Quick Evidence / Timeline / 3D Navigation */}
             {typeof onNavigateTab === 'function' && (
               <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                <button
+                  type="button"
+                  onClick={() => onNavigateTab('reconstruction3d')}
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#FAF4EB] hover:bg-[#F3E7D5] text-xs text-[#C18A45] font-semibold transition cursor-pointer border border-[#F0DFCA]"
+                >
+                  <Box className="w-3.5 h-3.5 text-[#C18A45]" />
+                  <span>Verify in 3D Scene</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+
                 <button
                   type="button"
                   onClick={() => onNavigateTab('timeline')}
                   className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#EBF2EE] hover:bg-[#DCEAE1] text-xs text-[#527D70] font-medium transition cursor-pointer"
                 >
                   <Clock className="w-3.5 h-3.5 text-[#527D70]" />
-                  <span>Inspect in Timeline Reconstruction</span>
+                  <span>Inspect in Timeline</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
 
@@ -655,7 +684,7 @@ export default function ContradictionMatrix({
                   className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#F5F4EF] hover:bg-[#EAE8E0] text-xs text-[#25364A] font-medium transition cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5 text-[#697586]" />
-                  <span>Inspect in Evidence Center</span>
+                  <span>Inspect Evidence</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>

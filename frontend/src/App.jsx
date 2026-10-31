@@ -5,8 +5,12 @@ import Dashboard from './components/Dashboard/Dashboard';
 import EvidenceUpload from './components/EvidenceUpload/EvidenceUpload';
 import TimelineReconstruction from './components/Timeline/TimelineReconstruction';
 import ContradictionMatrix from './components/Contradictions/ContradictionMatrix';
+import Reconstruction3D from './components/Reconstruction3D/Reconstruction3D';
 import TrajectoryViewer from './components/Trajectory/TrajectoryViewer';
 import InvestigationReport from './components/Reports/InvestigationReport';
+import ForensicInvestigationReport from './components/Reconstruction3D/Report/ForensicInvestigationReport';
+import WitnessAnalysisView from './components/AI/WitnessAnalysisView';
+import InvestigatorAssistant from './components/AI/InvestigatorAssistant';
 import apiService from './services/api';
 import { INCIDENTS } from './data/mockData';
 import { generateTimelineFromTelemetry } from './utils/telemetryTimelineEngine';
@@ -24,6 +28,13 @@ export default function App() {
   const [pipelineStatus, setPipelineStatus] = useState([]);
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reportMode, setReportMode] = useState('forensic'); // 'forensic' | 'summary'
+  const [isAssistantDrawerOpen, setIsAssistantDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    window.__setActiveTab = setActiveTab;
+    window.__setIsAssistantDrawerOpen = setIsAssistantDrawerOpen;
+  }, []);
 
   // Initial Data Load via apiService
   useEffect(() => {
@@ -85,6 +96,18 @@ export default function App() {
     if (incident.id) {
       await loadIncidentDetails(incident.id);
     }
+  };
+
+  const handleCreateIncident = (newInc) => {
+    if (!newInc) return;
+    setIncidents((prev) => [newInc, ...prev]);
+    setSelectedIncident(newInc);
+    setEvidenceSources([]);
+    setVehicles([]);
+    setTimelineEvents([]);
+    setContradictions([]);
+    setTrajectoryData([]);
+    setActiveTab('evidence');
   };
 
   const handleUploadEvidence = async (file, metadata) => {
@@ -154,7 +177,11 @@ export default function App() {
           incidents={Array.isArray(incidents) ? incidents : []}
           selectedIncident={selectedIncident}
           setSelectedIncident={handleSelectIncident}
+          onCreateIncident={handleCreateIncident}
           onRefresh={handleRefreshPipeline}
+          onNavigateTab={(tab) => setActiveTab(tab)}
+          onToggleAssistant={() => setIsAssistantDrawerOpen((prev) => !prev)}
+          contradictionsCount={effectiveContradictions.length}
         />
 
         {/* Scrollable View Content */}
@@ -164,6 +191,25 @@ export default function App() {
               incident={selectedIncident}
               incidents={Array.isArray(incidents) ? incidents : []}
               onSelectIncident={handleSelectIncident}
+              onCreateIncidentClick={() => {
+                const nextNum = Math.floor(Math.random() * 800 + 100);
+                handleCreateIncident({
+                  id: `INC-2026-0${nextNum}`,
+                  title: 'New Incident Case Investigation',
+                  location: 'Highway Intersection Sector',
+                  timestamp: new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
+                  weather: 'Clear / Dry Surface / 18°C',
+                  leadInvestigator: 'Accident Recon Unit',
+                  status: 'Active Collection',
+                  reconstructionConfidence: 0.0,
+                  forensicLock: false,
+                  totalVehicles: 0,
+                  evidenceCount: 0,
+                  timelineEventsCount: 0,
+                  contradictionsCount: 0,
+                  criticalFinding: 'Case initialized. Awaiting sensor telemetry ingestion.'
+                });
+              }}
               evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
               vehicles={Array.isArray(vehicles) ? vehicles : []}
               timelineEvents={effectiveTimelineEvents}
@@ -180,6 +226,16 @@ export default function App() {
               evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
               setEvidenceSources={setEvidenceSources}
               onUploadEvidence={handleUploadEvidence}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+            />
+          )}
+
+          {activeTab === 'ai-intelligence' && (
+            <WitnessAnalysisView
+              incident={selectedIncident}
+              timelineEvents={effectiveTimelineEvents}
+              evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
+              onNavigateTab={(tab) => setActiveTab(tab)}
             />
           )}
 
@@ -203,24 +259,92 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'reconstruction3d' && (
+            <Reconstruction3D
+              evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
+              timelineEvents={effectiveTimelineEvents}
+              vehicles={Array.isArray(vehicles) ? vehicles : []}
+              incident={selectedIncident}
+              contradictions={effectiveContradictions}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+            />
+          )}
+
           {activeTab === 'trajectory' && (
             <TrajectoryViewer
               trajectoryData={Array.isArray(trajectoryData) ? trajectoryData : []}
               vehicles={Array.isArray(vehicles) ? vehicles : []}
               incident={selectedIncident}
+              onNavigateTab={(tab) => setActiveTab(tab)}
             />
           )}
 
           {activeTab === 'reports' && (
-            <InvestigationReport
-              incident={selectedIncident}
-              contradictions={effectiveContradictions}
-              vehicles={Array.isArray(vehicles) ? vehicles : []}
-              evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
-            />
+            <div className="space-y-4">
+              <div className="px-6 pt-4 pb-0 flex items-center justify-between print:hidden">
+                <div className="flex items-center space-x-1 bg-[#E4E7EB] p-1 rounded-md text-xs font-medium">
+                  <button
+                    onClick={() => setReportMode('forensic')}
+                    className={`px-3 py-1.5 rounded transition cursor-pointer ${
+                      reportMode === 'forensic'
+                        ? 'bg-white text-[#25364A] shadow-xs font-semibold'
+                        : 'text-[#697586] hover:text-[#25364A]'
+                    }`}
+                  >
+                    Forensic Investigation Report (Phase 5.5)
+                  </button>
+                  <button
+                    onClick={() => setReportMode('summary')}
+                    className={`px-3 py-1.5 rounded transition cursor-pointer ${
+                      reportMode === 'summary'
+                        ? 'bg-white text-[#25364A] shadow-xs font-semibold'
+                        : 'text-[#697586] hover:text-[#25364A]'
+                    }`}
+                  >
+                    Executive Summary Dossier (Phase 4)
+                  </button>
+                </div>
+              </div>
+
+              {reportMode === 'forensic' ? (
+                <ForensicInvestigationReport
+                  incident={selectedIncident}
+                  evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
+                  timelineEvents={effectiveTimelineEvents}
+                  vehicles={Array.isArray(vehicles) ? vehicles : []}
+                  contradictions={effectiveContradictions}
+                  onNavigateTab={(tab) => setActiveTab(tab)}
+                />
+              ) : (
+                <InvestigationReport
+                  incident={selectedIncident}
+                  contradictions={effectiveContradictions}
+                  vehicles={Array.isArray(vehicles) ? vehicles : []}
+                  evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
+                />
+              )}
+            </div>
           )}
         </main>
       </div>
+
+      {/* Floating / Slide-Over AI Investigator Assistant Drawer */}
+      {isAssistantDrawerOpen && (
+        <div className="fixed inset-y-0 right-0 w-full sm:w-[480px] z-50 shadow-2xl bg-white border-l border-[#D9DEE3] animate-in slide-in-from-right duration-200">
+          <InvestigatorAssistant
+            incident={selectedIncident}
+            timelineEvents={effectiveTimelineEvents}
+            evidenceSources={Array.isArray(evidenceSources) ? evidenceSources : []}
+            contradictions={effectiveContradictions}
+            isDrawer={true}
+            onClose={() => setIsAssistantDrawerOpen(false)}
+            onNavigateTab={(tab) => {
+              setIsAssistantDrawerOpen(false);
+              setActiveTab(tab);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

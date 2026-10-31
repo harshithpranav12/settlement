@@ -17,7 +17,8 @@ import {
   MapPin,
   ExternalLink,
   ChevronRight,
-  Table
+  Table,
+  Box
 } from 'lucide-react';
 import { generateTimelineFromTelemetry, isBrakingActive, resolveColumnIndices } from '../../utils/telemetryTimelineEngine';
 
@@ -902,13 +903,23 @@ export default function TimelineReconstruction({
             </span>
 
             {typeof onNavigateTab === 'function' && (
-              <button
-                onClick={() => onNavigateTab('evidence')}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#F5F4EF] hover:bg-[#EAE8E0] text-xs text-[#25364A] font-medium transition cursor-pointer"
-              >
-                <span>Inspect in Evidence Center</span>
-                <ChevronRight className="w-3.5 h-3.5 text-[#697586]" />
-              </button>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => onNavigateTab('reconstruction3d')}
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#527D70] hover:bg-[#43675C] text-xs text-white font-semibold transition cursor-pointer shadow-xs"
+                >
+                  <Box className="w-3.5 h-3.5" />
+                  <span>Launch 3D Reconstruction</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => onNavigateTab('evidence')}
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#F5F4EF] hover:bg-[#EAE8E0] text-xs text-[#25364A] font-medium transition cursor-pointer"
+                >
+                  <span>Inspect in Evidence Center</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#697586]" />
+                </button>
+              </div>
             )}
           </div>
         </div>

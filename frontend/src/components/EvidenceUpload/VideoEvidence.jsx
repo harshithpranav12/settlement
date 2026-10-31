@@ -332,14 +332,31 @@ export default function VideoEvidence({ videos = [], onAddVideos, onRemoveVideo 
             </div>
 
             <div className="rounded-lg overflow-hidden bg-black aspect-video flex items-center justify-center">
-              <video
-                controls
-                autoPlay
-                className="w-full h-full object-contain"
-                src={previewVideo.previewUrl}
-              >
-                Your browser does not support HTML5 video preview for this container format.
-              </video>
+              {previewVideo.previewUrl ? (
+                <video
+                  controls
+                  autoPlay
+                  className="w-full h-full object-contain"
+                  src={previewVideo.previewUrl}
+                >
+                  Your browser does not support HTML5 video preview for this container format.
+                </video>
+              ) : (
+                <div className="p-8 text-center space-y-3 bg-[#1E293B] text-white w-full h-full flex flex-col items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-[#334155] border border-[#475569] flex items-center justify-center text-[#F59E0B]">
+                    <AlertCircle className="w-6 h-6 text-[#F59E0B]" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Physical Video Container Absent from Repository</h4>
+                    <p className="text-xs text-[#94A3B8] max-w-md mx-auto mt-1 leading-relaxed">
+                      Physical video file <code className="text-[#38BDF8]">{previewVideo.fileName || previewVideo.title}</code> is not present in local storage. Evidence record is preserved as ingested metadata, optical frame rates, and timecodes only.
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-[#0F172A] text-[#94A3B8] border border-[#334155]">
+                    Provenance: {previewVideo.origin || 'Preloaded Demo Evidence'} (Unverified Physical Stream)
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="flex items-center justify-between text-xs text-[#697586] pt-1">
