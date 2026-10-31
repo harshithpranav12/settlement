@@ -149,6 +149,12 @@ export default function EvidenceUpload({
   };
 
   // General Register Handler
+  const handleUpdateItem = (id, updatedFields) => {
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item))
+    );
+  };
+
   const handleRemoveItem = (id) => {
     setItems((prev) => prev.filter((i) => i.id !== id));
   };
@@ -244,6 +250,9 @@ export default function EvidenceUpload({
               videos={videoItems}
               onAddVideos={handleAddVideos}
               onRemoveVideo={handleRemoveVideo}
+              onUpdateVideo={handleUpdateItem}
+              incident={incident}
+              onNavigateTab={onNavigateTab}
             />
           )}
 
@@ -253,6 +262,7 @@ export default function EvidenceUpload({
               onAddStatement={handleAddStatement}
               onUpdateStatement={handleUpdateStatement}
               onDeleteStatement={handleDeleteStatement}
+              incident={incident}
               onNavigateTab={onNavigateTab}
             />
           )}
@@ -262,6 +272,9 @@ export default function EvidenceUpload({
               sensors={sensorItems}
               onAddSensorRecords={handleAddSensorRecords}
               onRemoveSensorRecord={handleRemoveSensorRecord}
+              onUpdateSensor={handleUpdateItem}
+              incident={incident}
+              onNavigateTab={onNavigateTab}
             />
           )}
         </div>

@@ -11,12 +11,24 @@ import {
   X,
   HardDrive,
   Clock,
-  Layers
+  Layers,
+  Play,
+  ArrowRight
 } from 'lucide-react';
+import apiService from '../../services/api';
 
-export default function SensorRecords({ sensors = [], onAddSensorRecords, onRemoveSensorRecord }) {
+export default function SensorRecords({
+  sensors = [],
+  onAddSensorRecords,
+  onRemoveSensorRecord,
+  onUpdateSensor,
+  incident,
+  onNavigateTab
+}) {
   const [dragActive, setDragActive] = useState(false);
   const [parseError, setParseError] = useState(null);
+  const [analysisNotice, setAnalysisNotice] = useState(null);
+  const [analyzingId, setAnalyzingId] = useState(null);
   const [selectedPreviewRecord, setSelectedPreviewRecord] = useState(null);
   const [showAllRows, setShowAllRows] = useState(false);
   const fileInputRef = useRef(null);
@@ -64,6 +76,33 @@ export default function SensorRecords({ sensors = [], onAddSensorRecords, onRemo
     if (e.target.files && e.target.files.length > 0) {
       processFiles(Array.from(e.target.files));
       e.target.value = '';
+    }
+  };
+
+  const handleAnalyzeSensor = async (sensor) => {
+    setAnalyzingId(sensor.id);
+    setAnalysisNotice(null);
+    setParseError(null);
+    try {
+      const incId = incident?.id || 'INC-2026-0884';
+      const res = await apiService.analyzeSensor(incId, sensor.id);
+      if (res) {
+        if (typeof onUpdateSensor === 'function') {
+          onUpdateSensor(sensor.id, {
+            status: 'Analysis Complete',
+            observationsCount: res.extracted_observations_count,
+            rapidDecelerations: res.rapid_decelerations_detected,
+            vehicleStops: res.vehicle_stops_detected,
+            dataGaps: res.data_gaps_detected,
+            details: res.summary || `Extracted ${res.extracted_observations_count} kinematic observations across ${res.total_rows_parsed} rows.`,
+          });
+        }
+        setAnalysisNotice(`Deterministic sensor analysis complete: ${res.extracted_observations_count} kinematic observations indexed into SQLite.`);
+      }
+    } catch (err) {
+      setParseError(err.message || 'Sensor telemetry analysis failed');
+    } finally {
+      setAnalyzingId(null);
     }
   };
 
@@ -307,6 +346,23 @@ export default function SensorRecords({ sensors = [], onAddSensorRecords, onRemo
         </div>
       )}
 
+      {/* Analysis Success Alert */}
+      {analysisNotice && (
+        <div className="p-4 rounded-lg bg-[#EBF2EE] border border-[#D0E0D6] flex items-start space-x-3 text-xs text-[#527D70]">
+          <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+          <div className="flex-1 leading-relaxed">
+            <span className="font-semibold">Kinematics Pipeline: </span>
+            {analysisNotice}
+          </div>
+          <button
+            onClick={() => setAnalysisNotice(null)}
+            className="text-[#527D70] hover:text-[#25364A] p-0.5"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
       {/* Sensor Records Registry */}
       <div className="rounded-lg bg-white border border-[#D9DEE3] p-6 shadow-card space-y-4">
         <div className="flex items-center justify-between pb-4 border-b border-[#EDF0F3]">
@@ -374,6 +430,36 @@ export default function SensorRecords({ sensors = [], onAddSensorRecords, onRemo
                     </div>
 
                     <div className="flex items-center space-x-2 shrink-0">
+                      {!((sensor.status || '').toLowerCase().includes('complete') || sensor.observationsCount > 0) ? (
+                        <button
+                          onClick={() => handleAnalyzeSensor(sensor)}
+                          disabled={analyzingId === sensor.id}
+                          className="px-3 py-1.5 rounded-md bg-[#527D70] hover:bg-[#43675c] text-white text-xs font-medium flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50"
+                        >
+                          {analyzingId === sensor.id ? (
+                            <>
+                              <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                              <span>Parsing...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Play className="w-3.5 h-3.5 fill-current" />
+                              <span>Analyze Telemetry</span>
+                            </>
+                          )}
+                        </button>
+                      ) : (
+                        typeof onNavigateTab === 'function' && (
+                          <button
+                            onClick={() => onNavigateTab('timeline')}
+                            className="px-3 py-1.5 rounded-md bg-[#EBF2EE] hover:bg-[#D8E6DC] text-[#527D70] text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+                          >
+                            <span>Timeline</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </button>
+                        )
+                      )}
+
                       {sensor.sampleRows && sensor.sampleRows.length > 0 && (
                         <button
                           onClick={() => {

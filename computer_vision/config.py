@@ -18,7 +18,10 @@ SAMPLE_VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Pretrained Model Configuration
 # We use YOLOv8n (nano), a fast ~6MB model optimized for CPU real-time inference
-YOLO_MODEL_NAME = "yolov8n.pt"
+_LOCAL_MODEL = PROJECT_ROOT / "yolov8n.pt"
+if not _LOCAL_MODEL.exists():
+    _LOCAL_MODEL = MODULE_DIR / "yolov8n.pt"
+YOLO_MODEL_NAME = str(_LOCAL_MODEL.resolve()) if _LOCAL_MODEL.exists() else "yolov8n.pt"
 
 # COCO Dataset Vehicle Class IDs to filter:
 # 2: car, 3: motorcycle, 5: bus, 7: truck

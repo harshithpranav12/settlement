@@ -98,22 +98,34 @@ export default function App() {
     }
   };
 
-  const handleCreateIncident = (newInc) => {
+  const handleCreateIncident = async (newInc) => {
     if (!newInc) return;
-    setIncidents((prev) => [newInc, ...prev]);
-    setSelectedIncident(newInc);
-    setEvidenceSources([]);
-    setVehicles([]);
-    setTimelineEvents([]);
-    setContradictions([]);
-    setTrajectoryData([]);
-    setActiveTab('evidence');
+    try {
+      const created = await apiService.createIncident(newInc);
+      const effectiveInc = created || newInc;
+      setIncidents((prev) => [effectiveInc, ...prev.filter((i) => i.id !== effectiveInc.id)]);
+      setSelectedIncident(effectiveInc);
+      setEvidenceSources([]);
+      setVehicles([]);
+      setTimelineEvents([]);
+      setContradictions([]);
+      setTrajectoryData([]);
+      setActiveTab('evidence');
+    } catch (err) {
+      console.error('Failed to create incident in backend:', err);
+      setIncidents((prev) => [newInc, ...prev]);
+      setSelectedIncident(newInc);
+      setActiveTab('evidence');
+    }
   };
 
   const handleUploadEvidence = async (file, metadata) => {
-    const newEvidence = await apiService.uploadEvidence(file, metadata);
+    const incId = selectedIncident?.id || 'INC-2026-0884';
+    const newEvidence = await apiService.uploadEvidence(incId, file, metadata);
     if (newEvidence) {
       setEvidenceSources((prev) => (Array.isArray(prev) ? [newEvidence, ...prev] : [newEvidence]));
+      // Trigger pipeline refresh to fetch latest timeline & contradictions
+      await handleRefreshPipeline();
     }
     return newEvidence;
   };

@@ -12,6 +12,7 @@ from app.routes.analysis import router as analysis_router
 from app.routes.evidence import router as evidence_router
 from app.routes.health import router as health_router
 from app.routes.incident import router as incident_router
+from app.routes.ai import router as ai_router
 
 logging.basicConfig(
     level=logging.INFO if not settings.DEBUG else logging.DEBUG,
@@ -92,6 +93,12 @@ def create_application() -> FastAPI:
     application.include_router(incident_router, prefix=settings.API_PREFIX, tags=["Incidents & Parties"])
     application.include_router(evidence_router, prefix=settings.API_PREFIX, tags=["Evidence Management"])
     application.include_router(analysis_router, prefix=settings.API_PREFIX, tags=["Analysis & Investigation"])
+    application.include_router(ai_router, prefix="/api/v1/ai", tags=["AI Investigator (v1)"])
+    application.include_router(ai_router, prefix="/api/ai", tags=["AI Investigator"])
+
+    @application.get("/api/v1/health", tags=["Health"])
+    async def v1_health():
+        return {"status": "healthy", "service": settings.PROJECT_NAME}
 
     @application.get("/", tags=["Root"])
     async def root():

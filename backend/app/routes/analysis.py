@@ -244,7 +244,7 @@ async def get_incident_investigation(
     incident_id: str = Path(..., description="Unique ID of the incident"),
 ) -> InvestigationWorkflowResponse:
     """Run or retrieve automated investigation status for an incident."""
-    return investigation_engine_service.run_investigation(incident_id=incident_id)
+    return await investigation_engine_service.run_investigation(incident_id=incident_id)
 
 
 @router.post(
@@ -257,7 +257,7 @@ async def trigger_incident_investigation(
     incident_id: str = Path(..., description="Unique ID of the incident"),
 ) -> InvestigationWorkflowResponse:
     """Coordinate the full investigation pipeline across statements, telemetry, and video."""
-    return investigation_engine_service.run_investigation(incident_id=incident_id)
+    return await investigation_engine_service.run_investigation(incident_id=incident_id)
 
 
 # ============================================================================

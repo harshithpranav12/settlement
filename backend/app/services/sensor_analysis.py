@@ -299,6 +299,7 @@ class SensorAnalysisService:
                 "source_filename": source_filename,
                 "row_start": pat.row_start,
                 "row_end": pat.row_end,
+                "row_index": pat.row_start,
                 "vehicle_id": pat.vehicle_id,
                 "evidence_id": evidence_id,
                 **pat.metrics,

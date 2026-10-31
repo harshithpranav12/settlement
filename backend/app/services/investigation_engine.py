@@ -46,7 +46,7 @@ logger = logging.getLogger("trace_ai.investigation_engine")
 class InvestigationEngineService:
     """Coordinates multi-modal investigation pipelines and evidence-driven workflows."""
 
-    def run_investigation(self, incident_id: str) -> InvestigationWorkflowResponse:
+    async def run_investigation(self, incident_id: str) -> InvestigationWorkflowResponse:
         """Execute or update the automated investigation workflow for an incident."""
         start_time = time.perf_counter()
         started_at = datetime.now(timezone.utc)
@@ -136,6 +136,15 @@ class InvestigationEngineService:
                     is_conclusive=False,
                     conclusion_summary=f"Investigation pending: Missing initial statements from {', '.join(missing_who)}.",
                 )
+
+            # Auto-trigger statement analysis if V1 and V2 statements are available and not yet analyzed
+            existing_statement_runs = [r for r in list_analysis_runs_for_incident(incident_id) if r.run_type == "statement_analysis"]
+            if not existing_statement_runs:
+                try:
+                    from app.services.statement_analyzer import statement_analyzer_service
+                    await statement_analyzer_service.analyze_incident_statements(incident_id)
+                except Exception as exc:
+                    logger.warning("Auto-trigger of statement analysis skipped or failed: %s", exc)
 
             # 2. Inspect available evidence
             evidence_items = list_evidence_for_incident(incident_id)

@@ -214,16 +214,22 @@ class ReportGeneratorService:
             for ev in all_events:
                 meta = ev.metadata or {}
                 if ev.classification == EventClassification.OBSERVATION and (
-                    "row_index" in meta or "sensor_event" in ev.event_type or "speed_kmh" in meta
+                    "row_index" in meta
+                    or "row_start" in meta
+                    or "source_filename" in meta
+                    or "sensor" in ev.event_type.lower()
+                    or "deceleration" in ev.event_type.lower()
+                    or "stopped" in ev.event_type.lower()
+                    or "speed_kmh" in meta
                 ):
                     sensor_observations.append(
                         SensorObservationRef(
                             evidence_id=ev.source_id or "sensor_source",
                             source_filename=meta.get("source_filename", "sensor_data.csv"),
-                            row_number=meta.get("row_index", 0),
+                            row_number=meta.get("row_start", meta.get("row_index", 0)),
                             timestamp=ev.wall_clock_timestamp.isoformat() if ev.wall_clock_timestamp else None,
                             relative_seconds=ev.video_offset_seconds,
-                            speed_kmh=meta.get("speed_kmh"),
+                            speed_kmh=meta.get("speed_kmh", meta.get("final_speed_kmh")),
                             event_type=ev.event_type,
                             description=ev.description,
                         )

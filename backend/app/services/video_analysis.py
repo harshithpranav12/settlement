@@ -450,7 +450,6 @@ class VideoAnalysisService:
     ) -> VideoAnalysisResponse:
         """Execute computer-vision pipeline on stored video evidence file and ingest results."""
         from starlette.concurrency import run_in_threadpool
-        from computer_vision.main import process_video
 
         evidence = self._verify_video_evidence(incident_id, evidence_id)
         video_path = Path(evidence.storage_reference).resolve()
@@ -459,6 +458,8 @@ class VideoAnalysisService:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Video file for evidence '{evidence_id}' does not exist on disk at '{video_path}'.",
             )
+
+        from computer_vision.main import process_video
 
         # Output directory: use dedicated subfolder inside incident storage or specified dir
         if output_dir:
