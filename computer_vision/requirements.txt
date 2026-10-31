@@ -1,0 +1,16 @@
+# TRACE AI - Computer Vision & Physics Reasoning Module
+# Core dependencies for vehicle detection, tracking, physics reasoning, and visualization
+
+# Computer Vision & Deep Learning
+ultralytics>=8.1.0
+opencv-python>=4.8.0
+lapx>=0.5.2
+
+# Scientific computing & Physics reasoning
+numpy>=1.24.0
+
+# Visualization & Plotting
+matplotlib>=3.7.0
+
+# Testing
+pytest>=7.4.0

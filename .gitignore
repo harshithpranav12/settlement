@@ -219,7 +219,18 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Machine Learning Models
+*.pt
+*.onnx
+
+# Node / Frontend
 node_modules/
 frontend/node_modules/
 dist/
 .env
+
+
+# Computer Vision & SQLite runtime outputs
+cv_outputs*/
+trace_ai.db
+data/uploads/
