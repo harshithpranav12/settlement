@@ -51,7 +51,12 @@ class BoundingBoxCoordinates(BaseModel):
                 raise ValueError(
                     f"Bounding box list must contain exactly 4 coordinates [x_min, y_min, x_max, y_max], got {len(data)}"
                 )
-            return {"x_min": data[0], "y_min": data[1], "x_max": data[2], "y_max": data[3]}
+            return {
+                "x_min": max(0.0, float(data[0])),
+                "y_min": max(0.0, float(data[1])),
+                "x_max": float(data[2]),
+                "y_max": float(data[3]),
+            }
         elif isinstance(data, dict):
             # Normalize alternative key spellings (xmin, ymin, xmax, ymax)
             normalized = dict(data)
@@ -70,6 +75,11 @@ class BoundingBoxCoordinates(BaseModel):
             if "height" in normalized and "y" in normalized and "y_max" not in normalized:
                 normalized["y_min"] = normalized["y"]
                 normalized["y_max"] = normalized["y"] + normalized["height"]
+            # Clamp non-negative coordinates from detector edge cases
+            if "x_min" in normalized and normalized["x_min"] is not None:
+                normalized["x_min"] = max(0.0, float(normalized["x_min"]))
+            if "y_min" in normalized and normalized["y_min"] is not None:
+                normalized["y_min"] = max(0.0, float(normalized["y_min"]))
             return normalized
         return data
 
@@ -147,6 +157,21 @@ class DetectionItem(BaseModel):
         examples=[0.91],
     )
 
+    @field_validator("vehicle_id", mode="before")
+    @classmethod
+    def coerce_vehicle_id(cls, v: Any) -> str:
+        return str(v)
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_detection_keys(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            if "vehicle_class" in normalized and "class" not in normalized and "class_name" not in normalized:
+                normalized["class"] = normalized["vehicle_class"]
+            return normalized
+        return data
+
     model_config = {
         "populate_by_name": True,
         "from_attributes": True,
@@ -157,7 +182,7 @@ class TrajectoryInputPoint(BaseModel):
     """Explicit trajectory point provided by the CV pipeline."""
 
     timestamp_seconds: float = Field(..., ge=0.0, description="Video offset in seconds")
-    frame_number: int = Field(..., ge=0, description="Video frame number")
+    frame_number: int = Field(default=0, ge=0, description="Video frame number")
     center_x: float = Field(..., description="Center X in pixel space")
     center_y: float = Field(..., description="Center Y in pixel space")
 
@@ -167,6 +192,11 @@ class TrajectorySequenceInput(BaseModel):
 
     vehicle_id: str = Field(..., min_length=1)
     points: List[TrajectoryInputPoint] = Field(default_factory=list)
+
+    @field_validator("vehicle_id", mode="before")
+    @classmethod
+    def coerce_vehicle_id(cls, v: Any) -> str:
+        return str(v)
 
 
 class MotionAnalysisItem(BaseModel):
@@ -202,6 +232,11 @@ class MotionAnalysisItem(BaseModel):
         description="Qualitative summary of image-plane kinematic behavior",
         examples=["Vehicle shows increasing image-plane movement."],
     )
+
+    @field_validator("vehicle_id", mode="before")
+    @classmethod
+    def coerce_vehicle_id(cls, v: Any) -> str:
+        return str(v)
 
 
 class PossibleInteractionItem(BaseModel):
@@ -241,6 +276,30 @@ class PossibleInteractionItem(BaseModel):
         description="Confidence score for this interaction observation",
         examples=[0.72],
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_interaction_keys(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            if "vehicle_ids" not in normalized:
+                vids = []
+                if "vehicle_id_a" in normalized and normalized["vehicle_id_a"] is not None:
+                    vids.append(str(normalized["vehicle_id_a"]))
+                if "vehicle_id_b" in normalized and normalized["vehicle_id_b"] is not None:
+                    vids.append(str(normalized["vehicle_id_b"]))
+                if vids:
+                    normalized["vehicle_ids"] = vids
+            else:
+                normalized["vehicle_ids"] = [str(vid) for vid in normalized["vehicle_ids"]]
+            if "finding" not in normalized and "interaction_type" in normalized:
+                normalized["finding"] = normalized["interaction_type"]
+            if "min_image_distance_pixels" not in normalized and "distance_pixels" in normalized:
+                normalized["min_image_distance_pixels"] = normalized["distance_pixels"]
+            if "evidence_frame_numbers" not in normalized and "frame_number" in normalized:
+                normalized["evidence_frame_numbers"] = [int(normalized["frame_number"])]
+            return normalized
+        return data
 
 
 class VideoAnalysisPayload(BaseModel):
@@ -285,17 +344,73 @@ class VideoAnalysisPayload(BaseModel):
         default_factory=list,
         description="Optional multi-track interaction patterns (path convergence, proximity)",
     )
+    video_id: Optional[str] = None
+    video_metadata: Optional[Dict[str, Any]] = None
+    vehicles: Optional[List[Dict[str, Any]]] = None
+    artifacts: Optional[Dict[str, Any]] = None
+    limitations: Optional[List[str]] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_payload_keys(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            if "source_id" not in normalized and "video_id" in normalized:
+                normalized["source_id"] = normalized["video_id"]
+
+            vehicles = normalized.get("vehicles")
+            if vehicles and isinstance(vehicles, list):
+                if not normalized.get("trajectories"):
+                    trajectories = []
+                    for veh in vehicles:
+                        veh_id = str(veh.get("vehicle_id", ""))
+                        pts = []
+                        fps = float(normalized.get("video_fps", 30.0))
+                        for pt in veh.get("trajectory", []):
+                            ts = pt.get("timestamp_seconds", 0.0)
+                            fn = pt.get("frame_number")
+                            if fn is None or fn == 0:
+                                fn = int(round(ts * fps))
+                            cx = pt.get("center_x", pt.get("x", 0.0))
+                            cy = pt.get("center_y", pt.get("y", 0.0))
+                            pts.append({
+                                "timestamp_seconds": ts,
+                                "frame_number": fn,
+                                "center_x": cx,
+                                "center_y": cy,
+                            })
+                        if veh_id:
+                            trajectories.append({"vehicle_id": veh_id, "points": pts})
+                    normalized["trajectories"] = trajectories
+
+                if not normalized.get("motion_analysis"):
+                    motion_items = []
+                    for veh in vehicles:
+                        veh_id = str(veh.get("vehicle_id", ""))
+                        ma = veh.get("motion_analysis")
+                        if isinstance(ma, dict):
+                            motion_items.append({
+                                "vehicle_id": veh_id,
+                                "velocity_trend": ma.get("velocity_trend"),
+                                "acceleration_trend": ma.get("acceleration_trend"),
+                                "sudden_motion_change": ma.get("sudden_motion_change", False),
+                                "analysis_notes": f"Direction: {ma.get('direction', 'unknown')}. Max velocity: {ma.get('max_velocity_px_per_sec', 0.0)} px/s, max acceleration: {ma.get('max_acceleration_px_per_sec2', 0.0)} px/s².",
+                            })
+                    normalized["motion_analysis"] = motion_items
+            return normalized
+        return data
 
     @model_validator(mode="after")
     def validate_frame_boundaries(self) -> "VideoAnalysisPayload":
         """Verify that all bounding boxes fall within the reported frame width and height."""
+        # Allow a slight subpixel tolerance (1.5 px) for float box roundings
         for i, det in enumerate(self.detections):
-            if det.bbox.x_max > self.frame_width:
+            if det.bbox.x_max > self.frame_width + 1.5:
                 raise ValueError(
                     f"Detection at index {i} (vehicle_id='{det.vehicle_id}') bbox x_max ({det.bbox.x_max}) "
                     f"exceeds frame_width ({self.frame_width})"
                 )
-            if det.bbox.y_max > self.frame_height:
+            if det.bbox.y_max > self.frame_height + 1.5:
                 raise ValueError(
                     f"Detection at index {i} (vehicle_id='{det.vehicle_id}') bbox y_max ({det.bbox.y_max}) "
                     f"exceeds frame_height ({self.frame_height})"
@@ -359,6 +474,8 @@ class VideoAnalysisResponse(BaseModel):
     motion_analysis: List[MotionAnalysisItem] = Field(default_factory=list)
     possible_interactions: List[PossibleInteractionItem] = Field(default_factory=list)
     extracted_event_ids: List[str] = Field(default_factory=list)
+    artifacts: Optional[Dict[str, Any]] = None
+    limitations: Optional[List[str]] = None
     summary: str
     disclaimer: str = Field(
         default=(

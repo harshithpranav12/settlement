@@ -196,10 +196,13 @@ class VideoAnalysisService:
 
             # Merge or add points from precomputed trajectories
             for p in traj_pts_input:
-                if p.frame_number in pts_by_frame:
-                    existing = pts_by_frame[p.frame_number]
-                    pts_by_frame[p.frame_number] = TrajectoryPoint(
-                        frame_number=p.frame_number,
+                fn = p.frame_number
+                if fn == 0 and p.timestamp_seconds > 0 and payload.video_fps > 0:
+                    fn = int(round(p.timestamp_seconds * payload.video_fps))
+                if fn in pts_by_frame:
+                    existing = pts_by_frame[fn]
+                    pts_by_frame[fn] = TrajectoryPoint(
+                        frame_number=fn,
                         timestamp_seconds=p.timestamp_seconds,
                         center_pixel_x=round(p.center_x, 2),
                         center_pixel_y=round(p.center_y, 2),
@@ -208,8 +211,8 @@ class VideoAnalysisService:
                         confidence=existing.confidence,
                     )
                 else:
-                    pts_by_frame[p.frame_number] = TrajectoryPoint(
-                        frame_number=p.frame_number,
+                    pts_by_frame[fn] = TrajectoryPoint(
+                        frame_number=fn,
                         timestamp_seconds=p.timestamp_seconds,
                         center_pixel_x=round(p.center_x, 2),
                         center_pixel_y=round(p.center_y, 2),
@@ -432,11 +435,67 @@ class VideoAnalysisService:
             motion_analysis=payload.motion_analysis or [],
             possible_interactions=payload.possible_interactions or [],
             extracted_event_ids=extracted_event_ids,
+            artifacts=payload.artifacts,
+            limitations=payload.limitations,
             summary=summary,
         )
+
+
+    async def analyze_video_evidence(
+        self,
+        incident_id: str,
+        evidence_id: str,
+        output_dir: Optional[str] = None,
+        export_annotated_video: bool = True,
+    ) -> VideoAnalysisResponse:
+        """Execute computer-vision pipeline on stored video evidence file and ingest results."""
+        from starlette.concurrency import run_in_threadpool
+        from computer_vision.main import process_video
+
+        evidence = self._verify_video_evidence(incident_id, evidence_id)
+        video_path = Path(evidence.storage_reference).resolve()
+        if not video_path.exists():
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Video file for evidence '{evidence_id}' does not exist on disk at '{video_path}'.",
+            )
+
+        # Output directory: use dedicated subfolder inside incident storage or specified dir
+        if output_dir:
+            target_out = Path(output_dir).resolve()
+        else:
+            target_out = video_path.parent / f"cv_outputs_{evidence.id}"
+        target_out.mkdir(parents=True, exist_ok=True)
+
+        logger.info(
+            "Starting CV pipeline for incident=%s evidence=%s video_path=%s output_dir=%s",
+            incident_id,
+            evidence.id,
+            video_path,
+            target_out,
+        )
+
+        try:
+            cv_results = await run_in_threadpool(
+                process_video,
+                video_path=video_path,
+                output_dir=target_out,
+                export_annotated_video=export_annotated_video,
+            )
+        except Exception as exc:
+            logger.error("CV pipeline execution failed for evidence %s: %s", evidence.id, exc)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Computer vision analysis failed: {str(exc)}",
+            ) from exc
+
+        # Set source_id to evidence.id so ingestion links directly to the evidence
+        cv_results["source_id"] = evidence.id
+        return self.process_detection_results(incident_id=incident_id, detection_data=cv_results)
 
 
 video_analysis_service = VideoAnalysisService()
 
 # Direct convenience function for computer-vision teammate:
 process_detection_results = video_analysis_service.process_detection_results
+analyze_video_evidence = video_analysis_service.analyze_video_evidence

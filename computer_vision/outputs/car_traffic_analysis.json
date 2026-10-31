@@ -1,0 +1,1880 @@
+{
+  "source_id": "car_traffic",
+  "video_fps": 12.5,
+  "frame_width": 768,
+  "frame_height": 432,
+  "detections": [
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "frame_number": 62,
+      "timestamp_seconds": 4.96,
+      "bbox": [
+        267.77,
+        304.34,
+        492.05,
+        429.1
+      ],
+      "center_x": 379.91,
+      "center_y": 366.72,
+      "confidence": 0.656
+    },
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "frame_number": 63,
+      "timestamp_seconds": 5.04,
+      "bbox": [
+        258.11,
+        292.54,
+        501.27,
+        428.36
+      ],
+      "center_x": 379.69,
+      "center_y": 360.45,
+      "confidence": 0.531
+    },
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "frame_number": 64,
+      "timestamp_seconds": 5.12,
+      "bbox": [
+        247.55,
+        279.39,
+        511.76,
+        428.08
+      ],
+      "center_x": 379.65,
+      "center_y": 353.74,
+      "confidence": 0.57
+    },
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "frame_number": 65,
+      "timestamp_seconds": 5.2,
+      "bbox": [
+        234.06,
+        261.82,
+        525.4,
+        427.79
+      ],
+      "center_x": 379.73,
+      "center_y": 344.8,
+      "confidence": 0.386
+    },
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "frame_number": 66,
+      "timestamp_seconds": 5.28,
+      "bbox": [
+        223.79,
+        248.45,
+        533.71,
+        427.87
+      ],
+      "center_x": 378.75,
+      "center_y": 338.16,
+      "confidence": 0.507
+    },
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "frame_number": 67,
+      "timestamp_seconds": 5.36,
+      "bbox": [
+        212.59,
+        231.35,
+        544.52,
+        427.62
+      ],
+      "center_x": 378.56,
+      "center_y": 329.49,
+      "confidence": 0.392
+    },
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "frame_number": 68,
+      "timestamp_seconds": 5.44,
+      "bbox": [
+        205.21,
+        218.1,
+        550.93,
+        427.71
+      ],
+      "center_x": 378.07,
+      "center_y": 322.91,
+      "confidence": 0.395
+    },
+    {
+      "vehicle_id": 5,
+      "vehicle_class": "car",
+      "frame_number": 100,
+      "timestamp_seconds": 8.0,
+      "bbox": [
+        290.91,
+        0.52,
+        392.31,
+        75.03
+      ],
+      "center_x": 341.61,
+      "center_y": 37.77,
+      "confidence": 0.695
+    },
+    {
+      "vehicle_id": 5,
+      "vehicle_class": "car",
+      "frame_number": 101,
+      "timestamp_seconds": 8.08,
+      "bbox": [
+        294.74,
+        0.36,
+        387.42,
+        68.11
+      ],
+      "center_x": 341.08,
+      "center_y": 34.23,
+      "confidence": 0.632
+    },
+    {
+      "vehicle_id": 5,
+      "vehicle_class": "car",
+      "frame_number": 102,
+      "timestamp_seconds": 8.16,
+      "bbox": [
+        302.73,
+        0.95,
+        377.48,
+        54.68
+      ],
+      "center_x": 340.1,
+      "center_y": 27.81,
+      "confidence": 0.482
+    },
+    {
+      "vehicle_id": 5,
+      "vehicle_class": "car",
+      "frame_number": 103,
+      "timestamp_seconds": 8.24,
+      "bbox": [
+        306.53,
+        0.16,
+        373.37,
+        47.01
+      ],
+      "center_x": 339.95,
+      "center_y": 23.59,
+      "confidence": 0.532
+    },
+    {
+      "vehicle_id": 5,
+      "vehicle_class": "car",
+      "frame_number": 104,
+      "timestamp_seconds": 8.32,
+      "bbox": [
+        311.09,
+        0.81,
+        369.44,
+        40.06
+      ],
+      "center_x": 340.27,
+      "center_y": 20.44,
+      "confidence": 0.526
+    },
+    {
+      "vehicle_id": 6,
+      "vehicle_class": "car",
+      "frame_number": 193,
+      "timestamp_seconds": 15.44,
+      "bbox": [
+        126.45,
+        1.54,
+        274.26,
+        150.53
+      ],
+      "center_x": 200.35,
+      "center_y": 76.03,
+      "confidence": 0.573
+    },
+    {
+      "vehicle_id": 6,
+      "vehicle_class": "car",
+      "frame_number": 195,
+      "timestamp_seconds": 15.6,
+      "bbox": [
+        109.62,
+        1.31,
+        283.72,
+        177.91
+      ],
+      "center_x": 196.67,
+      "center_y": 89.61,
+      "confidence": 0.623
+    },
+    {
+      "vehicle_id": 6,
+      "vehicle_class": "car",
+      "frame_number": 196,
+      "timestamp_seconds": 15.68,
+      "bbox": [
+        101.7,
+        1.39,
+        287.66,
+        191.83
+      ],
+      "center_x": 194.68,
+      "center_y": 96.61,
+      "confidence": 0.515
+    },
+    {
+      "vehicle_id": 6,
+      "vehicle_class": "car",
+      "frame_number": 197,
+      "timestamp_seconds": 15.76,
+      "bbox": [
+        94.94,
+        1.36,
+        290.77,
+        204.5
+      ],
+      "center_x": 192.86,
+      "center_y": 102.93,
+      "confidence": 0.431
+    },
+    {
+      "vehicle_id": 6,
+      "vehicle_class": "car",
+      "frame_number": 200,
+      "timestamp_seconds": 16.0,
+      "bbox": [
+        68.42,
+        2.86,
+        304.24,
+        254.4
+      ],
+      "center_x": 186.33,
+      "center_y": 128.63,
+      "confidence": 0.379
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "car",
+      "frame_number": 204,
+      "timestamp_seconds": 16.32,
+      "bbox": [
+        313.6,
+        168.41,
+        492.38,
+        427.17
+      ],
+      "center_x": 402.99,
+      "center_y": 297.79,
+      "confidence": 0.362
+    },
+    {
+      "vehicle_id": 6,
+      "vehicle_class": "car",
+      "frame_number": 206,
+      "timestamp_seconds": 16.48,
+      "bbox": [
+        37.72,
+        58.45,
+        308.19,
+        361.69
+      ],
+      "center_x": 172.95,
+      "center_y": 210.07,
+      "confidence": 0.402
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 209,
+      "timestamp_seconds": 16.72,
+      "bbox": [
+        299.87,
+        107.56,
+        494.29,
+        391.82
+      ],
+      "center_x": 397.08,
+      "center_y": 249.69,
+      "confidence": 0.349
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 210,
+      "timestamp_seconds": 16.8,
+      "bbox": [
+        300.21,
+        93.45,
+        489.73,
+        372.96
+      ],
+      "center_x": 394.97,
+      "center_y": 233.21,
+      "confidence": 0.341
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 211,
+      "timestamp_seconds": 16.88,
+      "bbox": [
+        301.21,
+        82.98,
+        485.4,
+        356.83
+      ],
+      "center_x": 393.3,
+      "center_y": 219.9,
+      "confidence": 0.403
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 213,
+      "timestamp_seconds": 17.04,
+      "bbox": [
+        302.7,
+        61.5,
+        477.35,
+        322.8
+      ],
+      "center_x": 390.02,
+      "center_y": 192.15,
+      "confidence": 0.409
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 214,
+      "timestamp_seconds": 17.12,
+      "bbox": [
+        302.7,
+        51.33,
+        472.77,
+        307.22
+      ],
+      "center_x": 387.73,
+      "center_y": 179.27,
+      "confidence": 0.515
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 215,
+      "timestamp_seconds": 17.2,
+      "bbox": [
+        303.67,
+        42.68,
+        468.75,
+        292.02
+      ],
+      "center_x": 386.21,
+      "center_y": 167.35,
+      "confidence": 0.393
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "car",
+      "frame_number": 219,
+      "timestamp_seconds": 17.52,
+      "bbox": [
+        305.9,
+        4.49,
+        456.42,
+        231.84
+      ],
+      "center_x": 381.16,
+      "center_y": 118.16,
+      "confidence": 0.365
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "car",
+      "frame_number": 220,
+      "timestamp_seconds": 17.6,
+      "bbox": [
+        307.31,
+        0.0,
+        452.45,
+        217.74
+      ],
+      "center_x": 379.88,
+      "center_y": 108.87,
+      "confidence": 0.489
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 221,
+      "timestamp_seconds": 17.68,
+      "bbox": [
+        308.74,
+        0.0,
+        447.23,
+        204.12
+      ],
+      "center_x": 377.98,
+      "center_y": 102.06,
+      "confidence": 0.432
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 222,
+      "timestamp_seconds": 17.76,
+      "bbox": [
+        310.77,
+        0.0,
+        442.83,
+        191.82
+      ],
+      "center_x": 376.8,
+      "center_y": 95.91,
+      "confidence": 0.457
+    },
+    {
+      "vehicle_id": 9,
+      "vehicle_class": "car",
+      "frame_number": 222,
+      "timestamp_seconds": 17.76,
+      "bbox": [
+        69.36,
+        299.21,
+        231.01,
+        428.17
+      ],
+      "center_x": 150.19,
+      "center_y": 363.69,
+      "confidence": 0.573
+    },
+    {
+      "vehicle_id": 9,
+      "vehicle_class": "car",
+      "frame_number": 223,
+      "timestamp_seconds": 17.84,
+      "bbox": [
+        81.99,
+        321.11,
+        217.49,
+        428.5
+      ],
+      "center_x": 149.74,
+      "center_y": 374.8,
+      "confidence": 0.598
+    },
+    {
+      "vehicle_id": 9,
+      "vehicle_class": "car",
+      "frame_number": 224,
+      "timestamp_seconds": 17.92,
+      "bbox": [
+        92.86,
+        340.07,
+        207.11,
+        429.26
+      ],
+      "center_x": 149.99,
+      "center_y": 384.66,
+      "confidence": 0.605
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 225,
+      "timestamp_seconds": 18.0,
+      "bbox": [
+        318.82,
+        0.0,
+        429.92,
+        155.85
+      ],
+      "center_x": 374.37,
+      "center_y": 77.92,
+      "confidence": 0.853
+    },
+    {
+      "vehicle_id": 9,
+      "vehicle_class": "car",
+      "frame_number": 225,
+      "timestamp_seconds": 18.0,
+      "bbox": [
+        100.05,
+        356.29,
+        198.22,
+        430.71
+      ],
+      "center_x": 149.14,
+      "center_y": 393.5,
+      "confidence": 0.689
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 226,
+      "timestamp_seconds": 18.08,
+      "bbox": [
+        321.24,
+        0.0,
+        425.03,
+        141.23
+      ],
+      "center_x": 373.14,
+      "center_y": 70.62,
+      "confidence": 0.422
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 227,
+      "timestamp_seconds": 18.16,
+      "bbox": [
+        322.82,
+        0.0,
+        421.9,
+        129.4
+      ],
+      "center_x": 372.36,
+      "center_y": 64.7,
+      "confidence": 0.426
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 228,
+      "timestamp_seconds": 18.24,
+      "bbox": [
+        323.77,
+        0.0,
+        416.91,
+        116.87
+      ],
+      "center_x": 370.34,
+      "center_y": 58.44,
+      "confidence": 0.777
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "car",
+      "frame_number": 229,
+      "timestamp_seconds": 18.32,
+      "bbox": [
+        325.31,
+        0.0,
+        413.65,
+        105.51
+      ],
+      "center_x": 369.48,
+      "center_y": 52.75,
+      "confidence": 0.693
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "bus",
+      "frame_number": 230,
+      "timestamp_seconds": 18.4,
+      "bbox": [
+        325.99,
+        0.0,
+        410.89,
+        96.21
+      ],
+      "center_x": 368.44,
+      "center_y": 48.1,
+      "confidence": 0.522
+    },
+    {
+      "vehicle_id": 10,
+      "vehicle_class": "car",
+      "frame_number": 230,
+      "timestamp_seconds": 18.4,
+      "bbox": [
+        310.97,
+        0.64,
+        426.15,
+        97.69
+      ],
+      "center_x": 368.56,
+      "center_y": 49.17,
+      "confidence": 0.432
+    },
+    {
+      "vehicle_id": 10,
+      "vehicle_class": "car",
+      "frame_number": 231,
+      "timestamp_seconds": 18.48,
+      "bbox": [
+        316.33,
+        0.94,
+        418.34,
+        86.48
+      ],
+      "center_x": 367.34,
+      "center_y": 43.71,
+      "confidence": 0.869
+    },
+    {
+      "vehicle_id": 10,
+      "vehicle_class": "car",
+      "frame_number": 232,
+      "timestamp_seconds": 18.56,
+      "bbox": [
+        319.77,
+        0.94,
+        410.73,
+        76.43
+      ],
+      "center_x": 365.25,
+      "center_y": 38.69,
+      "confidence": 0.796
+    },
+    {
+      "vehicle_id": 10,
+      "vehicle_class": "car",
+      "frame_number": 233,
+      "timestamp_seconds": 18.64,
+      "bbox": [
+        325.2,
+        0.49,
+        401.33,
+        62.28
+      ],
+      "center_x": 363.26,
+      "center_y": 31.38,
+      "confidence": 0.619
+    },
+    {
+      "vehicle_id": 10,
+      "vehicle_class": "car",
+      "frame_number": 234,
+      "timestamp_seconds": 18.72,
+      "bbox": [
+        328.14,
+        0.46,
+        395.51,
+        53.32
+      ],
+      "center_x": 361.83,
+      "center_y": 26.89,
+      "confidence": 0.751
+    },
+    {
+      "vehicle_id": 10,
+      "vehicle_class": "car",
+      "frame_number": 235,
+      "timestamp_seconds": 18.8,
+      "bbox": [
+        330.25,
+        0.2,
+        390.12,
+        44.88
+      ],
+      "center_x": 360.19,
+      "center_y": 22.54,
+      "confidence": 0.613
+    },
+    {
+      "vehicle_id": 11,
+      "vehicle_class": "car",
+      "frame_number": 344,
+      "timestamp_seconds": 27.52,
+      "bbox": [
+        129.57,
+        315.75,
+        280.12,
+        428.92
+      ],
+      "center_x": 204.85,
+      "center_y": 372.33,
+      "confidence": 0.429
+    },
+    {
+      "vehicle_id": 11,
+      "vehicle_class": "car",
+      "frame_number": 345,
+      "timestamp_seconds": 27.6,
+      "bbox": [
+        145.56,
+        341.69,
+        263.4,
+        429.07
+      ],
+      "center_x": 204.48,
+      "center_y": 385.38,
+      "confidence": 0.575
+    }
+  ],
+  "video_id": "car_traffic",
+  "video_metadata": {
+    "fps": 12.5,
+    "total_frames": 377,
+    "duration_seconds": 30.16,
+    "resolution": {
+      "width": 768,
+      "height": 432
+    }
+  },
+  "vehicles": [
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "vehicle_id": 1,
+          "vehicle_class": "car",
+          "frame_number": 62,
+          "timestamp_seconds": 4.96,
+          "bbox": [
+            267.77,
+            304.34,
+            492.05,
+            429.1
+          ],
+          "center_x": 379.91,
+          "center_y": 366.72,
+          "confidence": 0.656
+        },
+        {
+          "vehicle_id": 1,
+          "vehicle_class": "car",
+          "frame_number": 63,
+          "timestamp_seconds": 5.04,
+          "bbox": [
+            258.11,
+            292.54,
+            501.27,
+            428.36
+          ],
+          "center_x": 379.69,
+          "center_y": 360.45,
+          "confidence": 0.531
+        },
+        {
+          "vehicle_id": 1,
+          "vehicle_class": "car",
+          "frame_number": 64,
+          "timestamp_seconds": 5.12,
+          "bbox": [
+            247.55,
+            279.39,
+            511.76,
+            428.08
+          ],
+          "center_x": 379.65,
+          "center_y": 353.74,
+          "confidence": 0.57
+        },
+        {
+          "vehicle_id": 1,
+          "vehicle_class": "car",
+          "frame_number": 65,
+          "timestamp_seconds": 5.2,
+          "bbox": [
+            234.06,
+            261.82,
+            525.4,
+            427.79
+          ],
+          "center_x": 379.73,
+          "center_y": 344.8,
+          "confidence": 0.386
+        },
+        {
+          "vehicle_id": 1,
+          "vehicle_class": "car",
+          "frame_number": 66,
+          "timestamp_seconds": 5.28,
+          "bbox": [
+            223.79,
+            248.45,
+            533.71,
+            427.87
+          ],
+          "center_x": 378.75,
+          "center_y": 338.16,
+          "confidence": 0.507
+        },
+        {
+          "vehicle_id": 1,
+          "vehicle_class": "car",
+          "frame_number": 67,
+          "timestamp_seconds": 5.36,
+          "bbox": [
+            212.59,
+            231.35,
+            544.52,
+            427.62
+          ],
+          "center_x": 378.56,
+          "center_y": 329.49,
+          "confidence": 0.392
+        },
+        {
+          "vehicle_id": 1,
+          "vehicle_class": "car",
+          "frame_number": 68,
+          "timestamp_seconds": 5.44,
+          "bbox": [
+            205.21,
+            218.1,
+            550.93,
+            427.71
+          ],
+          "center_x": 378.07,
+          "center_y": 322.91,
+          "confidence": 0.395
+        }
+      ],
+      "motion_analysis": {
+        "direction": "up",
+        "velocity_trend": "constant",
+        "acceleration_trend": "zero",
+        "sudden_motion_change": true,
+        "max_velocity_px_per_sec": 93.94,
+        "max_acceleration_px_per_sec2": 278.68,
+        "sudden_change_events": [
+          {
+            "timestamp_seconds": 5.12,
+            "acceleration_px_per_sec2": 270.97,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 5.36,
+            "acceleration_px_per_sec2": -278.68,
+            "nature": "abrupt_deceleration"
+          }
+        ]
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 4.96,
+          "x": 379.81,
+          "y": 362.87
+        },
+        {
+          "timestamp_seconds": 5.04,
+          "x": 379.78,
+          "y": 358.49
+        },
+        {
+          "timestamp_seconds": 5.12,
+          "x": 379.55,
+          "y": 352.77
+        },
+        {
+          "timestamp_seconds": 5.2,
+          "x": 379.28,
+          "y": 345.33
+        },
+        {
+          "timestamp_seconds": 5.28,
+          "x": 378.95,
+          "y": 337.82
+        },
+        {
+          "timestamp_seconds": 5.36,
+          "x": 378.64,
+          "y": 331.65
+        },
+        {
+          "timestamp_seconds": 5.44,
+          "x": 378.3,
+          "y": 327.28
+        }
+      ]
+    },
+    {
+      "vehicle_id": 5,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "vehicle_id": 5,
+          "vehicle_class": "car",
+          "frame_number": 100,
+          "timestamp_seconds": 8.0,
+          "bbox": [
+            290.91,
+            0.52,
+            392.31,
+            75.03
+          ],
+          "center_x": 341.61,
+          "center_y": 37.77,
+          "confidence": 0.695
+        },
+        {
+          "vehicle_id": 5,
+          "vehicle_class": "car",
+          "frame_number": 101,
+          "timestamp_seconds": 8.08,
+          "bbox": [
+            294.74,
+            0.36,
+            387.42,
+            68.11
+          ],
+          "center_x": 341.08,
+          "center_y": 34.23,
+          "confidence": 0.632
+        },
+        {
+          "vehicle_id": 5,
+          "vehicle_class": "car",
+          "frame_number": 102,
+          "timestamp_seconds": 8.16,
+          "bbox": [
+            302.73,
+            0.95,
+            377.48,
+            54.68
+          ],
+          "center_x": 340.1,
+          "center_y": 27.81,
+          "confidence": 0.482
+        },
+        {
+          "vehicle_id": 5,
+          "vehicle_class": "car",
+          "frame_number": 103,
+          "timestamp_seconds": 8.24,
+          "bbox": [
+            306.53,
+            0.16,
+            373.37,
+            47.01
+          ],
+          "center_x": 339.95,
+          "center_y": 23.59,
+          "confidence": 0.532
+        },
+        {
+          "vehicle_id": 5,
+          "vehicle_class": "car",
+          "frame_number": 104,
+          "timestamp_seconds": 8.32,
+          "bbox": [
+            311.09,
+            0.81,
+            369.44,
+            40.06
+          ],
+          "center_x": 340.27,
+          "center_y": 20.44,
+          "confidence": 0.526
+        }
+      ],
+      "motion_analysis": {
+        "direction": "up",
+        "velocity_trend": "constant",
+        "acceleration_trend": "zero",
+        "sudden_motion_change": false,
+        "max_velocity_px_per_sec": 43.45,
+        "max_acceleration_px_per_sec2": 111.5,
+        "sudden_change_events": []
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 8.0,
+          "x": 341.2,
+          "y": 35.07
+        },
+        {
+          "timestamp_seconds": 8.08,
+          "x": 340.87,
+          "y": 32.23
+        },
+        {
+          "timestamp_seconds": 8.16,
+          "x": 340.6,
+          "y": 28.77
+        },
+        {
+          "timestamp_seconds": 8.24,
+          "x": 340.33,
+          "y": 25.3
+        },
+        {
+          "timestamp_seconds": 8.32,
+          "x": 340.17,
+          "y": 22.54
+        }
+      ]
+    },
+    {
+      "vehicle_id": 6,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "vehicle_id": 6,
+          "vehicle_class": "car",
+          "frame_number": 193,
+          "timestamp_seconds": 15.44,
+          "bbox": [
+            126.45,
+            1.54,
+            274.26,
+            150.53
+          ],
+          "center_x": 200.35,
+          "center_y": 76.03,
+          "confidence": 0.573
+        },
+        {
+          "vehicle_id": 6,
+          "vehicle_class": "car",
+          "frame_number": 195,
+          "timestamp_seconds": 15.6,
+          "bbox": [
+            109.62,
+            1.31,
+            283.72,
+            177.91
+          ],
+          "center_x": 196.67,
+          "center_y": 89.61,
+          "confidence": 0.623
+        },
+        {
+          "vehicle_id": 6,
+          "vehicle_class": "car",
+          "frame_number": 196,
+          "timestamp_seconds": 15.68,
+          "bbox": [
+            101.7,
+            1.39,
+            287.66,
+            191.83
+          ],
+          "center_x": 194.68,
+          "center_y": 96.61,
+          "confidence": 0.515
+        },
+        {
+          "vehicle_id": 6,
+          "vehicle_class": "car",
+          "frame_number": 197,
+          "timestamp_seconds": 15.76,
+          "bbox": [
+            94.94,
+            1.36,
+            290.77,
+            204.5
+          ],
+          "center_x": 192.86,
+          "center_y": 102.93,
+          "confidence": 0.431
+        },
+        {
+          "vehicle_id": 6,
+          "vehicle_class": "car",
+          "frame_number": 200,
+          "timestamp_seconds": 16.0,
+          "bbox": [
+            68.42,
+            2.86,
+            304.24,
+            254.4
+          ],
+          "center_x": 186.33,
+          "center_y": 128.63,
+          "confidence": 0.379
+        },
+        {
+          "vehicle_id": 6,
+          "vehicle_class": "car",
+          "frame_number": 206,
+          "timestamp_seconds": 16.48,
+          "bbox": [
+            37.72,
+            58.45,
+            308.19,
+            361.69
+          ],
+          "center_x": 172.95,
+          "center_y": 210.07,
+          "confidence": 0.402
+        }
+      ],
+      "motion_analysis": {
+        "direction": "down",
+        "velocity_trend": "constant",
+        "acceleration_trend": "positive",
+        "sudden_motion_change": true,
+        "max_velocity_px_per_sec": 342.03,
+        "max_acceleration_px_per_sec2": 2574.23,
+        "sudden_change_events": [
+          {
+            "timestamp_seconds": 15.58,
+            "acceleration_px_per_sec2": 843.22,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 15.68,
+            "acceleration_px_per_sec2": 2574.23,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 15.8,
+            "acceleration_px_per_sec2": -1498.24,
+            "nature": "abrupt_deceleration"
+          }
+        ]
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 15.44,
+          "x": 198.48,
+          "y": 82.86
+        },
+        {
+          "timestamp_seconds": 15.6,
+          "x": 196.98,
+          "y": 88.24
+        },
+        {
+          "timestamp_seconds": 15.68,
+          "x": 194.18,
+          "y": 98.76
+        },
+        {
+          "timestamp_seconds": 15.76,
+          "x": 188.7,
+          "y": 125.57
+        },
+        {
+          "timestamp_seconds": 16.0,
+          "x": 183.95,
+          "y": 149.66
+        },
+        {
+          "timestamp_seconds": 16.48,
+          "x": 179.61,
+          "y": 172.35
+        }
+      ]
+    },
+    {
+      "vehicle_id": 8,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "car",
+          "frame_number": 204,
+          "timestamp_seconds": 16.32,
+          "bbox": [
+            313.6,
+            168.41,
+            492.38,
+            427.17
+          ],
+          "center_x": 402.99,
+          "center_y": 297.79,
+          "confidence": 0.362
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 209,
+          "timestamp_seconds": 16.72,
+          "bbox": [
+            299.87,
+            107.56,
+            494.29,
+            391.82
+          ],
+          "center_x": 397.08,
+          "center_y": 249.69,
+          "confidence": 0.349
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 210,
+          "timestamp_seconds": 16.8,
+          "bbox": [
+            300.21,
+            93.45,
+            489.73,
+            372.96
+          ],
+          "center_x": 394.97,
+          "center_y": 233.21,
+          "confidence": 0.341
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 211,
+          "timestamp_seconds": 16.88,
+          "bbox": [
+            301.21,
+            82.98,
+            485.4,
+            356.83
+          ],
+          "center_x": 393.3,
+          "center_y": 219.9,
+          "confidence": 0.403
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 213,
+          "timestamp_seconds": 17.04,
+          "bbox": [
+            302.7,
+            61.5,
+            477.35,
+            322.8
+          ],
+          "center_x": 390.02,
+          "center_y": 192.15,
+          "confidence": 0.409
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 214,
+          "timestamp_seconds": 17.12,
+          "bbox": [
+            302.7,
+            51.33,
+            472.77,
+            307.22
+          ],
+          "center_x": 387.73,
+          "center_y": 179.27,
+          "confidence": 0.515
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 215,
+          "timestamp_seconds": 17.2,
+          "bbox": [
+            303.67,
+            42.68,
+            468.75,
+            292.02
+          ],
+          "center_x": 386.21,
+          "center_y": 167.35,
+          "confidence": 0.393
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "car",
+          "frame_number": 219,
+          "timestamp_seconds": 17.52,
+          "bbox": [
+            305.9,
+            4.49,
+            456.42,
+            231.84
+          ],
+          "center_x": 381.16,
+          "center_y": 118.16,
+          "confidence": 0.365
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "car",
+          "frame_number": 220,
+          "timestamp_seconds": 17.6,
+          "bbox": [
+            307.31,
+            0.0,
+            452.45,
+            217.74
+          ],
+          "center_x": 379.88,
+          "center_y": 108.87,
+          "confidence": 0.489
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 221,
+          "timestamp_seconds": 17.68,
+          "bbox": [
+            308.74,
+            0.0,
+            447.23,
+            204.12
+          ],
+          "center_x": 377.98,
+          "center_y": 102.06,
+          "confidence": 0.432
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 222,
+          "timestamp_seconds": 17.76,
+          "bbox": [
+            310.77,
+            0.0,
+            442.83,
+            191.82
+          ],
+          "center_x": 376.8,
+          "center_y": 95.91,
+          "confidence": 0.457
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 225,
+          "timestamp_seconds": 18.0,
+          "bbox": [
+            318.82,
+            0.0,
+            429.92,
+            155.85
+          ],
+          "center_x": 374.37,
+          "center_y": 77.92,
+          "confidence": 0.853
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 226,
+          "timestamp_seconds": 18.08,
+          "bbox": [
+            321.24,
+            0.0,
+            425.03,
+            141.23
+          ],
+          "center_x": 373.14,
+          "center_y": 70.62,
+          "confidence": 0.422
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 227,
+          "timestamp_seconds": 18.16,
+          "bbox": [
+            322.82,
+            0.0,
+            421.9,
+            129.4
+          ],
+          "center_x": 372.36,
+          "center_y": 64.7,
+          "confidence": 0.426
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 228,
+          "timestamp_seconds": 18.24,
+          "bbox": [
+            323.77,
+            0.0,
+            416.91,
+            116.87
+          ],
+          "center_x": 370.34,
+          "center_y": 58.44,
+          "confidence": 0.777
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "car",
+          "frame_number": 229,
+          "timestamp_seconds": 18.32,
+          "bbox": [
+            325.31,
+            0.0,
+            413.65,
+            105.51
+          ],
+          "center_x": 369.48,
+          "center_y": 52.75,
+          "confidence": 0.693
+        },
+        {
+          "vehicle_id": 8,
+          "vehicle_class": "bus",
+          "frame_number": 230,
+          "timestamp_seconds": 18.4,
+          "bbox": [
+            325.99,
+            0.0,
+            410.89,
+            96.21
+          ],
+          "center_x": 368.44,
+          "center_y": 48.1,
+          "confidence": 0.522
+        }
+      ],
+      "motion_analysis": {
+        "direction": "up",
+        "velocity_trend": "decreasing",
+        "acceleration_trend": "negative",
+        "sudden_motion_change": true,
+        "max_velocity_px_per_sec": 298.75,
+        "max_acceleration_px_per_sec2": 1624.4,
+        "sudden_change_events": [
+          {
+            "timestamp_seconds": 16.64,
+            "acceleration_px_per_sec2": 945.16,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 16.8,
+            "acceleration_px_per_sec2": 408.29,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 16.9,
+            "acceleration_px_per_sec2": -1624.4,
+            "nature": "abrupt_deceleration"
+          },
+          {
+            "timestamp_seconds": 17.02,
+            "acceleration_px_per_sec2": 1548.93,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 17.26,
+            "acceleration_px_per_sec2": -1113.94,
+            "nature": "abrupt_deceleration"
+          },
+          {
+            "timestamp_seconds": 17.46,
+            "acceleration_px_per_sec2": 766.88,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 17.68,
+            "acceleration_px_per_sec2": -1312.46,
+            "nature": "abrupt_deceleration"
+          },
+          {
+            "timestamp_seconds": 17.8,
+            "acceleration_px_per_sec2": -519.95,
+            "nature": "abrupt_deceleration"
+          },
+          {
+            "timestamp_seconds": 17.96,
+            "acceleration_px_per_sec2": 458.58,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 18.16,
+            "acceleration_px_per_sec2": -417.89,
+            "nature": "abrupt_deceleration"
+          }
+        ]
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 16.32,
+          "x": 400.2,
+          "y": 275.25
+        },
+        {
+          "timestamp_seconds": 16.72,
+          "x": 398.27,
+          "y": 259.68
+        },
+        {
+          "timestamp_seconds": 16.8,
+          "x": 395.67,
+          "y": 238.55
+        },
+        {
+          "timestamp_seconds": 16.88,
+          "x": 392.62,
+          "y": 214.84
+        },
+        {
+          "timestamp_seconds": 17.04,
+          "x": 390.45,
+          "y": 198.38
+        },
+        {
+          "timestamp_seconds": 17.12,
+          "x": 387.68,
+          "y": 175.37
+        },
+        {
+          "timestamp_seconds": 17.2,
+          "x": 385.0,
+          "y": 153.16
+        },
+        {
+          "timestamp_seconds": 17.52,
+          "x": 382.59,
+          "y": 135.14
+        },
+        {
+          "timestamp_seconds": 17.6,
+          "x": 380.41,
+          "y": 118.47
+        },
+        {
+          "timestamp_seconds": 17.68,
+          "x": 378.04,
+          "y": 100.58
+        },
+        {
+          "timestamp_seconds": 17.76,
+          "x": 376.43,
+          "y": 91.08
+        },
+        {
+          "timestamp_seconds": 18.0,
+          "x": 374.93,
+          "y": 82.24
+        },
+        {
+          "timestamp_seconds": 18.08,
+          "x": 373.4,
+          "y": 73.52
+        },
+        {
+          "timestamp_seconds": 18.16,
+          "x": 371.94,
+          "y": 64.89
+        },
+        {
+          "timestamp_seconds": 18.24,
+          "x": 370.75,
+          "y": 58.92
+        },
+        {
+          "timestamp_seconds": 18.32,
+          "x": 369.81,
+          "y": 54.42
+        },
+        {
+          "timestamp_seconds": 18.4,
+          "x": 369.03,
+          "y": 51.1
+        }
+      ]
+    },
+    {
+      "vehicle_id": 9,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "vehicle_id": 9,
+          "vehicle_class": "car",
+          "frame_number": 222,
+          "timestamp_seconds": 17.76,
+          "bbox": [
+            69.36,
+            299.21,
+            231.01,
+            428.17
+          ],
+          "center_x": 150.19,
+          "center_y": 363.69,
+          "confidence": 0.573
+        },
+        {
+          "vehicle_id": 9,
+          "vehicle_class": "car",
+          "frame_number": 223,
+          "timestamp_seconds": 17.84,
+          "bbox": [
+            81.99,
+            321.11,
+            217.49,
+            428.5
+          ],
+          "center_x": 149.74,
+          "center_y": 374.8,
+          "confidence": 0.598
+        },
+        {
+          "vehicle_id": 9,
+          "vehicle_class": "car",
+          "frame_number": 224,
+          "timestamp_seconds": 17.92,
+          "bbox": [
+            92.86,
+            340.07,
+            207.11,
+            429.26
+          ],
+          "center_x": 149.99,
+          "center_y": 384.66,
+          "confidence": 0.605
+        },
+        {
+          "vehicle_id": 9,
+          "vehicle_class": "car",
+          "frame_number": 225,
+          "timestamp_seconds": 18.0,
+          "bbox": [
+            100.05,
+            356.29,
+            198.22,
+            430.71
+          ],
+          "center_x": 149.14,
+          "center_y": 393.5,
+          "confidence": 0.689
+        }
+      ],
+      "motion_analysis": {
+        "direction": "down",
+        "velocity_trend": "decreasing",
+        "acceleration_trend": "negative",
+        "sudden_motion_change": false,
+        "max_velocity_px_per_sec": 138.99,
+        "max_acceleration_px_per_sec2": 196.24,
+        "sudden_change_events": []
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 17.76,
+          "x": 150.19,
+          "y": 363.69
+        },
+        {
+          "timestamp_seconds": 17.84,
+          "x": 149.74,
+          "y": 374.8
+        },
+        {
+          "timestamp_seconds": 17.92,
+          "x": 149.99,
+          "y": 384.66
+        },
+        {
+          "timestamp_seconds": 18.0,
+          "x": 149.14,
+          "y": 393.5
+        }
+      ]
+    },
+    {
+      "vehicle_id": 10,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "vehicle_id": 10,
+          "vehicle_class": "car",
+          "frame_number": 230,
+          "timestamp_seconds": 18.4,
+          "bbox": [
+            310.97,
+            0.64,
+            426.15,
+            97.69
+          ],
+          "center_x": 368.56,
+          "center_y": 49.17,
+          "confidence": 0.432
+        },
+        {
+          "vehicle_id": 10,
+          "vehicle_class": "car",
+          "frame_number": 231,
+          "timestamp_seconds": 18.48,
+          "bbox": [
+            316.33,
+            0.94,
+            418.34,
+            86.48
+          ],
+          "center_x": 367.34,
+          "center_y": 43.71,
+          "confidence": 0.869
+        },
+        {
+          "vehicle_id": 10,
+          "vehicle_class": "car",
+          "frame_number": 232,
+          "timestamp_seconds": 18.56,
+          "bbox": [
+            319.77,
+            0.94,
+            410.73,
+            76.43
+          ],
+          "center_x": 365.25,
+          "center_y": 38.69,
+          "confidence": 0.796
+        },
+        {
+          "vehicle_id": 10,
+          "vehicle_class": "car",
+          "frame_number": 233,
+          "timestamp_seconds": 18.64,
+          "bbox": [
+            325.2,
+            0.49,
+            401.33,
+            62.28
+          ],
+          "center_x": 363.26,
+          "center_y": 31.38,
+          "confidence": 0.619
+        },
+        {
+          "vehicle_id": 10,
+          "vehicle_class": "car",
+          "frame_number": 234,
+          "timestamp_seconds": 18.72,
+          "bbox": [
+            328.14,
+            0.46,
+            395.51,
+            53.32
+          ],
+          "center_x": 361.83,
+          "center_y": 26.89,
+          "confidence": 0.751
+        },
+        {
+          "vehicle_id": 10,
+          "vehicle_class": "car",
+          "frame_number": 235,
+          "timestamp_seconds": 18.8,
+          "bbox": [
+            330.25,
+            0.2,
+            390.12,
+            44.88
+          ],
+          "center_x": 360.19,
+          "center_y": 22.54,
+          "confidence": 0.613
+        }
+      ],
+      "motion_analysis": {
+        "direction": "up",
+        "velocity_trend": "decreasing",
+        "acceleration_trend": "negative",
+        "sudden_motion_change": false,
+        "max_velocity_px_per_sec": 69.79,
+        "max_acceleration_px_per_sec2": 174.05,
+        "sudden_change_events": []
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 18.4,
+          "x": 367.65,
+          "y": 45.98
+        },
+        {
+          "timestamp_seconds": 18.48,
+          "x": 366.59,
+          "y": 42.42
+        },
+        {
+          "timestamp_seconds": 18.56,
+          "x": 365.25,
+          "y": 37.97
+        },
+        {
+          "timestamp_seconds": 18.64,
+          "x": 363.57,
+          "y": 32.64
+        },
+        {
+          "timestamp_seconds": 18.72,
+          "x": 362.14,
+          "y": 28.41
+        },
+        {
+          "timestamp_seconds": 18.8,
+          "x": 361.13,
+          "y": 25.18
+        }
+      ]
+    },
+    {
+      "vehicle_id": 11,
+      "vehicle_class": "car",
+      "detections": [
+        {
+          "vehicle_id": 11,
+          "vehicle_class": "car",
+          "frame_number": 344,
+          "timestamp_seconds": 27.52,
+          "bbox": [
+            129.57,
+            315.75,
+            280.12,
+            428.92
+          ],
+          "center_x": 204.85,
+          "center_y": 372.33,
+          "confidence": 0.429
+        },
+        {
+          "vehicle_id": 11,
+          "vehicle_class": "car",
+          "frame_number": 345,
+          "timestamp_seconds": 27.6,
+          "bbox": [
+            145.56,
+            341.69,
+            263.4,
+            429.07
+          ],
+          "center_x": 204.48,
+          "center_y": 385.38,
+          "confidence": 0.575
+        }
+      ],
+      "motion_analysis": {
+        "direction": "down",
+        "velocity_trend": "constant",
+        "acceleration_trend": "zero",
+        "sudden_motion_change": false,
+        "max_velocity_px_per_sec": 163.19,
+        "max_acceleration_px_per_sec2": 0.0,
+        "sudden_change_events": []
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 27.52,
+          "x": 204.85,
+          "y": 372.33
+        },
+        {
+          "timestamp_seconds": 27.6,
+          "x": 204.48,
+          "y": 385.38
+        }
+      ]
+    }
+  ],
+  "possible_interactions": [
+    {
+      "vehicle_id_a": 8,
+      "vehicle_id_b": 10,
+      "timestamp_seconds": 18.4,
+      "frame_number": 230,
+      "distance_pixels": 1.08,
+      "interaction_type": "path_convergence",
+      "description": "Vehicle 8 and Vehicle 10 trajectories converge to minimum image-plane distance of 1.1 px at 18.40s."
+    }
+  ],
+  "limitations": [
+    "All velocities and accelerations are measured strictly in 2D image-plane pixels per second (px/s) and px/s^2.",
+    "Image-plane pixel measurements CANNOT be directly converted to real-world metric speed (km/h or mph) without camera calibration, intrinsic/extrinsic parameters, and physical ground distance references.",
+    "Camera perspective distortion, tilt angle, lens distortion, and distance from camera significantly affect pixel displacement rates.",
+    "Trajectory convergence and sudden motion changes represent possible interactions in the 2D video plane, NOT confirmed physical collisions or liability determinations.",
+    "Occlusions, lighting changes, camera motion, and tracking ID switches may cause temporary tracking gaps or ID reassignment."
+  ]
+}

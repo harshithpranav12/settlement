@@ -1,0 +1,21 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Model weights
+*.pt
+*.onnx
+*.engine
+
+# Video artifacts and generated plots
+outputs/*.mp4
+outputs/*.png
+!outputs/.gitkeep
+!outputs/*.json
+
+# Sample videos (except gitkeep)
+sample_videos/*.mp4
+sample_videos/*.avi
+!sample_videos/.gitkeep

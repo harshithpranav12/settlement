@@ -1,0 +1,177 @@
+{
+  "video_id": "test_stage7",
+  "video_metadata": {
+    "fps": 30.0,
+    "total_frames": 30,
+    "duration_seconds": 1.0
+  },
+  "vehicles": [
+    {
+      "vehicle_id": 1,
+      "vehicle_class": "car",
+      "detections": [],
+      "motion_analysis": {
+        "direction": "right",
+        "velocity_trend": "constant",
+        "acceleration_trend": "zero",
+        "sudden_motion_change": false
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 0.0,
+          "x": 103.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.033,
+          "x": 106.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.067,
+          "x": 110.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.1,
+          "x": 115.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.133,
+          "x": 120.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.167,
+          "x": 125.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.2,
+          "x": 130.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.233,
+          "x": 135.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.267,
+          "x": 140.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.3,
+          "x": 145.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.333,
+          "x": 150.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.367,
+          "x": 155.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.4,
+          "x": 160.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.433,
+          "x": 165.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.467,
+          "x": 170.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.5,
+          "x": 175.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.533,
+          "x": 180.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.567,
+          "x": 185.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.6,
+          "x": 190.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.633,
+          "x": 195.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.667,
+          "x": 200.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.7,
+          "x": 205.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.733,
+          "x": 210.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.767,
+          "x": 215.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.8,
+          "x": 220.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.833,
+          "x": 225.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.867,
+          "x": 230.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.9,
+          "x": 235.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.933,
+          "x": 239.0,
+          "y": 200.0
+        },
+        {
+          "timestamp_seconds": 0.967,
+          "x": 242.0,
+          "y": 200.0
+        }
+      ]
+    }
+  ],
+  "possible_interactions": [],
+  "limitations": [
+    "Unit test limitation."
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "video_id": "sample_traffic",
+  "video_metadata": {
+    "fps": 12.5,
+    "total_frames": 75,
+    "duration_seconds": 6.0,
+    "resolution": {
+      "width": 768,
+      "height": 432
+    }
+  },
+  "vehicles": [
+    {
+      "vehicle_id": 3,
+      "vehicle_class": "bus",
+      "detections": [
+        {
+          "vehicle_id": 3,
+          "vehicle_class": "bus",
+          "frame_number": 12,
+          "timestamp_seconds": 0.96,
+          "bbox": [
+            287.42,
+            0.09,
+            396.1,
+            106.42
+          ],
+          "center_x": 341.76,
+          "center_y": 53.26,
+          "confidence": 0.367
+        },
+        {
+          "vehicle_id": 3,
+          "vehicle_class": "car",
+          "frame_number": 14,
+          "timestamp_seconds": 1.12,
+          "bbox": [
+            295.82,
+            0.73,
+            387.19,
+            89.35
+          ],
+          "center_x": 341.51,
+          "center_y": 45.04,
+          "confidence": 0.394
+        },
+        {
+          "vehicle_id": 3,
+          "vehicle_class": "car",
+          "frame_number": 15,
+          "timestamp_seconds": 1.2,
+          "bbox": [
+            302.2,
+            0.52,
+            379.8,
+            74.2
+          ],
+          "center_x": 341.0,
+          "center_y": 37.36,
+          "confidence": 0.651
+        },
+        {
+          "vehicle_id": 3,
+          "vehicle_class": "car",
+          "frame_number": 16,
+          "timestamp_seconds": 1.28,
+          "bbox": [
+            304.89,
+            0.48,
+            376.4,
+            66.47
+          ],
+          "center_x": 340.65,
+          "center_y": 33.48,
+          "confidence": 0.591
+        },
+        {
+          "vehicle_id": 3,
+          "vehicle_class": "car",
+          "frame_number": 18,
+          "timestamp_seconds": 1.44,
+          "bbox": [
+            311.65,
+            0.0,
+            368.08,
+            48.25
+          ],
+          "center_x": 339.86,
+          "center_y": 24.12,
+          "confidence": 0.458
+        },
+        {
+          "vehicle_id": 3,
+          "vehicle_class": "car",
+          "frame_number": 19,
+          "timestamp_seconds": 1.52,
+          "bbox": [
+            314.18,
+            0.0,
+            366.07,
+            41.04
+          ],
+          "center_x": 340.12,
+          "center_y": 20.52,
+          "confidence": 0.718
+        }
+      ],
+      "motion_analysis": {
+        "direction": "up",
+        "velocity_trend": "constant",
+        "acceleration_trend": "positive",
+        "sudden_motion_change": true,
+        "max_velocity_px_per_sec": 81.95,
+        "max_acceleration_px_per_sec2": 427.11,
+        "sudden_change_events": [
+          {
+            "timestamp_seconds": 1.1,
+            "acceleration_px_per_sec2": 402.01,
+            "nature": "abrupt_acceleration"
+          },
+          {
+            "timestamp_seconds": 1.3,
+            "acceleration_px_per_sec2": -427.11,
+            "nature": "abrupt_deceleration"
+          }
+        ]
+      },
+      "trajectory": [
+        {
+          "timestamp_seconds": 0.96,
+          "x": 341.56,
+          "y": 48.44
+        },
+        {
+          "timestamp_seconds": 1.12,
+          "x": 341.34,
+          "y": 44.48
+        },
+        {
+          "timestamp_seconds": 1.2,
+          "x": 340.96,
+          "y": 38.65
+        },
+        {
+          "timestamp_seconds": 1.28,
+          "x": 340.63,
+          "y": 32.1
+        },
+        {
+          "timestamp_seconds": 1.44,
+          "x": 340.35,
+          "y": 27.2
+        },
+        {
+          "timestamp_seconds": 1.52,
+          "x": 340.17,
+          "y": 23.83
+        }
+      ]
+    }
+  ],
+  "possible_interactions": [],
+  "limitations": [
+    "All velocities and accelerations are measured strictly in 2D image-plane pixels per second (px/s) and px/s^2.",
+    "Image-plane pixel measurements CANNOT be directly converted to real-world metric speed (km/h or mph) without camera calibration, intrinsic/extrinsic parameters, and physical ground distance references.",
+    "Camera perspective distortion, tilt angle, lens distortion, and distance from camera significantly affect pixel displacement rates.",
+    "Trajectory convergence and sudden motion changes represent possible interactions in the 2D video plane, NOT confirmed physical collisions or liability determinations.",
+    "Occlusions, lighting changes, camera motion, and tracking ID switches may cause temporary tracking gaps or ID reassignment."
+  ]
+}

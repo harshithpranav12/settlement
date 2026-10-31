@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  
+  body {
+    background-color: #F5F4EF;
+    color: #25364A;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Light architectural engineering grid for trajectory & photogrammetry canvas */
+@layer utilities {
+  .cad-grid {
+    background-size: 20px 20px;
+    background-image: 
+      linear-gradient(to right, rgba(113, 137, 166, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(113, 137, 166, 0.12) 1px, transparent 1px);
+  }
+
+  .cad-grid-dense {
+    background-size: 10px 10px;
+    background-image: 
+      linear-gradient(to right, rgba(217, 222, 227, 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(217, 222, 227, 0.6) 1px, transparent 1px);
+  }
+}
+
+/* Crisp light enterprise scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F4EF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D9DEE3;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B5BDC6;
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+  aside, header {
+    display: none !important;
+  }
+}

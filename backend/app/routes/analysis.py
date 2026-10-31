@@ -1,7 +1,7 @@
 """API routes for forensic statement analysis, sensor analysis, timeline, contradiction, and report generation."""
 
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Path, Query, status
+from fastapi import APIRouter, File, Form, HTTPException, Path, Query, UploadFile, status
 
 from app.database import get_latest_report_for_incident
 from app.models.contradiction_engine import ContradictionEngineResponse
@@ -99,6 +99,57 @@ async def ingest_cv_detections_for_evidence(
         payload = payload.model_copy(update={"source_id": evidence_id})
     return video_analysis_service.process_detection_results(
         incident_id=incident_id, detection_data=payload
+    )
+
+
+@router.post(
+    "/incidents/{incident_id}/evidence/{evidence_id}/analyze-video",
+    response_model=VideoAnalysisResponse,
+    summary="Execute computer vision and physics analysis on stored video evidence",
+    description=(
+        "Executes YOLOv8 vehicle detection, ByteTrack tracking, trajectory extraction, "
+        "and 2D kinematic reasoning on the stored video file. Generates structured JSON analysis, "
+        "annotated video, and trajectory plot artifacts, and indexes normalized observation events in SQLite."
+    ),
+    tags=["Video & Computer Vision Analysis"],
+)
+async def analyze_video_evidence(
+    incident_id: str = Path(..., description="Unique ID of the incident"),
+    evidence_id: str = Path(..., description="Unique ID of the target video evidence"),
+) -> VideoAnalysisResponse:
+    """Analyze stored video evidence through the end-to-end computer-vision pipeline."""
+    return await video_analysis_service.analyze_video_evidence(
+        incident_id=incident_id, evidence_id=evidence_id
+    )
+
+
+@router.post(
+    "/incidents/{incident_id}/analyze-video",
+    response_model=VideoAnalysisResponse,
+    summary="Upload and analyze accident video through computer vision pipeline in one step",
+    description=(
+        "Accepts a multipart video file upload (MP4, AVI, MOV), securely saves it to bounded incident storage, "
+        "and executes the full CV pipeline: YOLOv8 vehicle detection, ByteTrack tracking, trajectory extraction, "
+        "and physics reasoning."
+    ),
+    tags=["Video & Computer Vision Analysis"],
+)
+async def upload_and_analyze_video(
+    incident_id: str = Path(..., description="Unique ID of the incident"),
+    file: UploadFile = File(..., description="Video file to upload and analyze"),
+    party_id: Optional[str] = Form(None, description="Optional ID of associated party (V1 or V2)"),
+) -> VideoAnalysisResponse:
+    """Upload video file and immediately execute computer vision analysis pipeline."""
+    from app.services.evidence_service import evidence_service
+
+    saved_evidence = await evidence_service.save_uploaded_file(
+        incident_id=incident_id,
+        file=file,
+        evidence_type="DASHCAM_VIDEO",
+        party_id=party_id,
+    )
+    return await video_analysis_service.analyze_video_evidence(
+        incident_id=incident_id, evidence_id=saved_evidence.id
     )
 
 
